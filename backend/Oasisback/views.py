@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth import authenticate
 from rest_framework import status
-from rest_framework.decorators import api_view
+from rest_framework.decorators import APIView
 from rest_framework.response import Response
 from .serializer import (
     UserSerializer,
@@ -16,7 +16,7 @@ from .models import (
     )
 
 
-class UserList(api_view):
+class UserList(APIView):
     def get(self, request):
         users = User.objects.all()
         serializer = UserSerializer(users, many=True)
@@ -32,13 +32,18 @@ class UserList(api_view):
 
 
 
-class Userlogin(api_view):
+class Userlogin(APIView):
+    def get(self, request):
+        users = User.objects.all()
+        serializer = UserSerializer(users, many=True)
+        return Response(serializer.data)
+
 
     def post(self, request):
         account = request.data.get('account')
         password = request.data.get('password')
         if account is None or password is None:
-            return Response({'error': 'Please provide both username and password'},
+            return Response({'error': 'Please provide both account and password'},
                             status=status.HTTP_400_BAD_REQUEST)
         user = User.objects.get(account=account)
         if user is None:
@@ -53,7 +58,14 @@ class Userlogin(api_view):
                             status=status.HTTP_400_BAD_REQUEST)
             
 
-class Userregister(api_view):
+class Userregister(APIView):
+    def get(self,request):
+        users = User.objects.all()
+        serializer = UserSerializer(users, many=True)
+        return Response(serializer.data)
+
+
+
     def post(self,request):
         account = request.data.get('account')
         user = User.objects.filter(account=account)
@@ -63,9 +75,9 @@ class Userregister(api_view):
         else:
             serializer = UserSerializer(data=request.data)
             if serializer.is_valid():
-                try:
-                    serializer.save()
-                except Exception as e:
-                    return Response({'register wrong': e},
+                serializer.save()
+                return Response({'success': 'Register success', 'data':serializer.data},
+                                status=status.HTTP_201_CREATED)
+            return Response(serializer.errors,
                             status=status.HTTP_400_BAD_REQUEST)
-                return Response({'success': 'Register success'}),
+        

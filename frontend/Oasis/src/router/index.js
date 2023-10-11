@@ -13,10 +13,18 @@ const router = createRouter({
     },
     {
       path: '/:catchAll(.*)',
-      name: '/404',
+      name: '404',
       component: () => import('../views/404Page.vue') 
-    }
+    },
+    {
+      path: '/',
+      name: 'home',
+      component: () => import('../views/Home.vue')
+    },
+
   ]
 })
+
+
 
 export default router

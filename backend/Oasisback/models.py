@@ -13,7 +13,7 @@ class User(models.Model):
     account = models.CharField(max_length=50)
     birthday = models.DateField()
     password = models.CharField(max_length=50)
-    password_2 = models.CharField(max_length=50)
+    password2 = models.CharField(max_length=50)
 
 
 

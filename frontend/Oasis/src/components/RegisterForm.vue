@@ -14,7 +14,7 @@
         <el-form-item label="email" prop="email">
             <el-input v-model="registerForm.email" placeholder="Enter your email" type="text" />
         </el-form-item>
-        <el-form-item label="Birthday">
+        <el-form-item label="Birthday" prop='birthday'>
             <el-col :span="11">
                 <el-date-picker v-model="registerForm.birthday" type="date" placeholder="Pick a date" />
             </el-col>
@@ -26,7 +26,7 @@
             <el-input v-model="registerForm.password" placeholder="Enter your password" type="password" />
         </el-form-item>
         <el-form-item label="password2" prop="password2">
-            <el-input v-model="registerForm.password2" placeholder="Enter your password again" type="text" />
+            <el-input v-model="registerForm.password2" placeholder="Enter your password again" type="password" />
         </el-form-item>
         <el-form-item>
             <el-button type="primary" class="submit-btn" @click="registersubmit">Sign up</el-button>
@@ -35,11 +35,20 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits } from 'vue'
+import { defineProps, defineEmits, watch} from 'vue'
 import { ref, reactive } from 'vue'
-import type { FormInstance, FormRules } from 'element-plus'
+import { dateEquals, type FormInstance, type FormRules } from 'element-plus'
+import { useRouter } from 'vue-router';
+import axios from 'axios'
 
 
+const emit = defineEmits(['update:registerForm'])
+const router = useRouter();
+
+const ruleFormRef = ref<FormInstance>()
+
+
+const {registerrules, registerForm} = 
 defineProps({
     registerrules: {
         type: Object,
@@ -51,16 +60,48 @@ defineProps({
     }
 })
 
-const ruleFormRef = ref<FormInstance>()
-const registersubmit = () => {
-    ruleFormRef.value?.validate((valid: any) => {
-        if (valid) {
-            console.log("submit success")
-        } else {
-            console.log('error submit!!')
-            return false
+
+watch(registerForm, (newValue) => {
+    emit('update:registerForm', newValue)
+})
+
+const changedate = (birthdaydate) => {
+    const birthdate = new Date(birthdaydate)
+    const year = birthdate.getFullYear()
+    const month = birthdate.getMonth() + 1
+    const day = birthdate.getDate()
+
+    const formattedBirthday = ref(`${year}-${month < 10 ? '0' : ''}${month}-${day < 10 ? '0' : ''}${day}`)
+    return formattedBirthday
+}
+
+
+const registersubmit = async() => {
+    const postdata = {
+            name: registerForm.name,
+            account: registerForm.account,
+            email: registerForm.email,
+            birthday: changedate(registerForm.birthday).value,
+            password: registerForm.password,
+            password2: registerForm.password2,
+    }
+    try {
+        console.log(postdata)
+        const response = await axios.post('http://localhost:8000/register/', postdata, {withCredentials: true})
+        console.log("status", response.data)
+        if (response.data.success){
+            console.log("register success")
+            console.log(response.data)
+            router.push('/')
         }
-    })
+        else{
+            console.log("register failed")
+        }
+    } catch (error) {
+        console.log("register failed !!!!!")
+        console.log(error)
+
+    }
 }
 
 

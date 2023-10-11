@@ -4,7 +4,7 @@ from .models import User, Article, Comment
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['user_id', 'create_time', 'name', 'email', 'account', 'birthday', 'password', 'password_2']
+        fields = ['user_id', 'create_time', 'name', 'email', 'account', 'birthday', 'password', 'password2']
 
 
 

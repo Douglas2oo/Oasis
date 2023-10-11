@@ -46,6 +46,18 @@ const ruleform = ref({
   password: ''
 })
 
+const registerForm = ref(
+  {
+    name: '',
+    account: '',
+    email: '',
+    birthday: '',
+    password: '',
+    password2: ''
+  }
+)
+
+
 const rules: FormRules = {
   account: [
     { required: true, message: 'Please input account', trigger: 'blur' },
@@ -64,13 +76,17 @@ const rules: FormRules = {
 const validatorpass = (rule: any, value: any, callback: any) => {
   if (value === '') {
     callback(new Error('Please input password again'))
-  } else if (value !== registerForm.password) {
-
-    callback(new Error('Two passwords are inconsistent'))
+  } else if (value !== registerForm.value.password) {
+    console.log("password2 value:", value)
+    console.log()
+    console.log("password value :" , registerForm.value.password)
+    console.log(reportError)
+      callback(new Error('Two passwords are inconsistent'))
   } else {
     callback()
   }
 }
+
 
 const registerrules: FormRules = {
   name: [
@@ -97,14 +113,6 @@ const registerrules: FormRules = {
   ]
 }
 
-const registerForm = reactive({
-  name: '',
-  account: '',
-  email: '',
-  birthday: '',
-  password: '',
-  password2: ''
-})
 
 
 

@@ -20,12 +20,22 @@
     </el-form>
 </template>
 
+
+
 <script setup lang="ts">
-import { defineProps, defineEmits } from 'vue'
+import { defineProps, defineEmits, watch } from 'vue'
 import {ref, reactive} from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
+import axios from 'axios'
+import { useRouter } from 'vue-router';
 
 
+
+const ruleFormRef = ref<FormInstance>()
+const router = useRouter();
+const emit = defineEmits(['update:ruleform'])
+
+const {rules, ruleform} = 
 defineProps({
     rules: {
         type: Object,
@@ -36,18 +46,40 @@ defineProps({
         required: true
     }
 })
-const ruleFormRef = ref<FormInstance>()
-const submitform = () =>{
-    ruleFormRef.value?.validate((valid: any) => {
-        if (valid) {
-            console.log("submit success")
-        } else {
-            console.log('error submit!!')
-            return false
-        }
-    })
-}
 
+
+watch(ruleform, (newval) => {
+    emit('update:ruleform', newval)
+})
+
+const submitform = async() =>{
+  try{
+    // create a new axios instance
+    const postdata = {
+      account: ruleform.account,
+      password: ruleform.password
+    }
+
+    const response = await axios.post('http://127.0.0.1:8000/login/', postdata, {withCredentials: true})
+    // output the response
+    console.log(response)
+    if (response.status == 200){
+      console.log("login success")
+      console.log(response.data)
+      router.push('/')
+    }
+    else{
+      console.log("login failed")
+    }
+  }
+  catch(error){
+    console.log("login failed")
+    console.log(error)
+  }
+  
+
+
+}
 </script>
 
 <style>
