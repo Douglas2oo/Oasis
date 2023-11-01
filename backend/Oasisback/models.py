@@ -20,6 +20,7 @@ class User(models.Model):
 
 
 class Article(models.Model):
+    id = models.AutoField(primary_key=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField()
     create_time = models.DateTimeField(auto_now_add=True)

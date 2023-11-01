@@ -80,4 +80,78 @@ class Userregister(APIView):
                                 status=status.HTTP_201_CREATED)
             return Response(serializer.errors,
                             status=status.HTTP_400_BAD_REQUEST)
+    
+
+class ArticleList(APIView):
+    def get(self, request,user_id):
+        user = User.objects.get(user_id=user_id)
+        serializer_article = ArticleSerializer(user.article_set.all(), many=True)
+        return Response(serializer_article.data)
+    
+
+
+class ArticleDetail(APIView):
+    def get(self, request):
+            article_id = request.data.get('article_id')
+            article = Article.objects.get(id=article_id)
+            if article:
+                return Response({'success': 'Get success', 'data':ArticleSerializer(article).data},
+                                status=status.HTTP_200_OK)
+            else:
+                return Response({'error': 'No such article'},
+                                status=status.HTTP_400_BAD_REQUEST)
+                
+
+
+
+    def post(self,request):
+        try:
+            user = User.objects.get(user_id=request.data.get('author'))
+            content = request.data.get('content')
+            articleserializer = ArticleSerializer(data={'author':user.user_id, 'content':content})
+            if articleserializer.is_valid():
+                article = articleserializer.save()
+                return Response({'success': 'Post success', 'data':ArticleSerializer(article).data},
+                            status=status.HTTP_201_CREATED)
+            else:
+                return Response(articleserializer.errors,
+                            status=status.HTTP_400_BAD_REQUEST)
+        except:
+            return Response({'error': 'No such user'},
+                            status=status.HTTP_400_BAD_REQUEST)
+        
+        
+
+    def put(self, request):
+                article_id = request.data.get('article_id')
+                article = Article.objects.get(id=article_id)
+                new_content = request.data.get('content')
+                articel_serializer = ArticleSerializer(article, data={'content':new_content}, partial=True)
+                if articel_serializer.is_valid():
+                    articel_serializer.save()
+                    return Response({'success': 'Put success', 'data':articel_serializer.data},
+                                    status=status.HTTP_200_OK)
+                else:
+                    return Response(articel_serializer.errors,
+                                    status=status.HTTP_400_BAD_REQUEST)
+                
+
+    def delete(self, request):
+                article_id = request.data.get('article_id')
+                article = Article.objects.get(id=article_id)
+                if article:
+                    article.delete()
+                    return Response({'success': 'Delete success'},
+                                    status=status.HTTP_200_OK)
+                else:
+                    return Response({'error': 'No such article'},
+                                    status=status.HTTP_400_BAD_REQUEST)
+                
+
+
+
+class Comment(APIView):
+    def get(self, request):
+        article_id = request.data.get('article_id')
+        article = Article.objects.get(id=article_id)
         
