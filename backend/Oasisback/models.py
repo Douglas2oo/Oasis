@@ -35,9 +35,10 @@ class Article(models.Model):
 
 
 class Comment(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     article = models.ForeignKey(Article, on_delete=models.CASCADE,related_name='comments')
-    content = models.TextField()
+    comment = models.TextField()
     create_time = models.DateTimeField(auto_now_add=True)
 
 

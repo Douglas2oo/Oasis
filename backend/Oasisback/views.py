@@ -125,8 +125,7 @@ class ArticleDetail(APIView):
     def put(self, request):
                 article_id = request.data.get('article_id')
                 article = Article.objects.get(id=article_id)
-                new_content = request.data.get('content')
-                articel_serializer = ArticleSerializer(article, data={'content':new_content}, partial=True)
+                articel_serializer = ArticleSerializer(article, data=request.data)
                 if articel_serializer.is_valid():
                     articel_serializer.save()
                     return Response({'success': 'Put success', 'data':articel_serializer.data},
@@ -149,9 +148,52 @@ class ArticleDetail(APIView):
                 
 
 
+class CommentList(APIView):
+    def get(self, request,user_id,article_id):
+        user = User.objects.get(user_id=user_id)
+        article = Article.objects.get(id=article_id, author=user)
+        comment = Comment.objects.filter(article=article)
+        comment_serializer = CommentSerializer(comment, many=True)
+        if comment_serializer:
+            return Response({'success': 'Get success', 'data':comment_serializer.data},
+                            status=status.HTTP_200_OK)
+        else:
+            return Response({'error': 'No such comment'},
+                            status=status.HTTP_400_BAD_REQUEST)
+                
 
-class Comment(APIView):
-    def get(self, request):
-        article_id = request.data.get('article_id')
-        article = Article.objects.get(id=article_id)
+
+
+class Commentdetail(APIView):
+    def post(self, request):
+        try:
+            user_id = request.data.get('user_id')
+            user = User.objects.get(user_id=user_id)
+            article_id = request.data.get('article_id')
+            article = Article.objects.get(id=article_id)
+            comment_serializer = CommentSerializer(data={'author':user.user_id, 'article':article.id, 'comment':request.data.get('comment')})
+            if comment_serializer.is_valid():
+                comment = comment_serializer.save()
+                return Response({'success': 'Post success', 'data':CommentSerializer(comment).data},
+                                status=status.HTTP_201_CREATED)
+            
+            else:
+                return Response(comment_serializer.errors,
+                                status=status.HTTP_400_BAD_REQUEST)
+            
+
+        except:
+            return Response({'error': 'No such user or article'},
+                            status=status.HTTP_400_BAD_REQUEST)
         
+
+    def delete(self,request):
+        comment_id = request.data.get('comment_id')
+        comment = Comment.objects.get(id=comment_id)
+        if comment:
+            comment.delete()
+            return Response({'success': 'Delete success'},
+                            status=status.HTTP_200_OK)
+        else:
+            return Response({'error': 'No such comment'},
+                            status=status.HTTP_400_BAD_REQUEST)
