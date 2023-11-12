@@ -47,6 +47,14 @@ defineProps({
     }
 })
 
+const Userdata = reactive({
+    id : '',
+    name: '',
+    account: '',
+    email: '',
+    birthday: '',
+})
+
 
 watch(ruleform, (newval) => {
     emit('update:ruleform', newval)
@@ -65,8 +73,23 @@ const submitform = async() =>{
     console.log(response)
     if (response.status == 200){
       console.log("login success")
-      console.log(response.data)
-      router.push('/')
+      console.log(response.data['data']['user_id'])
+      Userdata.id = response.data['data']['user_id']
+      Userdata.name = response.data['data']['name']
+      Userdata.account = response.data['data']['account']
+      Userdata.email = response.data['data']['email']
+      Userdata.birthday = response.data['data']['birthday']
+
+      router.push({
+        name: 'home',
+        query: {
+          id: Userdata.id,
+          name: Userdata.name,
+          account: Userdata.account,
+          email: Userdata.email,
+          birthday: Userdata.birthday,
+        }
+      })
     }
     else{
       console.log("login failed")

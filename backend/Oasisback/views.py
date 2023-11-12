@@ -51,7 +51,7 @@ class Userlogin(APIView):
                             status=status.HTTP_400_BAD_REQUEST)
         else:
             if user.password == password:
-                return Response({'success': 'Login success'},
+                return Response({'success': 'Login success' , 'data':UserSerializer(user).data},
                             status=status.HTTP_200_OK)
             else:
                 return Response({'error': 'Wrong password'},
