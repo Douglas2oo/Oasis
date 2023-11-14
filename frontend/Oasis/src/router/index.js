@@ -19,7 +19,20 @@ const router = createRouter({
     {
       path: '/home',
       name: 'home',
-      component: () => import('../views/Home.vue')
+      component: () => import('../views/Home.vue'),
+      children: [
+        {
+          path: '/home',
+          name: 'YourHome',
+          component: () => import('../views/YourHome.vue'),
+ 
+        },
+        {
+          path: '/ForumSquare',
+          name: 'ForumSquare',
+          component: () => import('../views/ForumSquare.vue'),
+
+        },]
     },
 
   ]

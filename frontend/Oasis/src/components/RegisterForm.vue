@@ -100,7 +100,7 @@ const registersubmit = async () => {
             Userdata.email = response.data.email
             Userdata.birthday = response.data.birthday
             router.push({
-                name: 'home',
+                name: 'ForumSquare',
                 params: {
                     id: Userdata.id,
                     name: Userdata.name,
