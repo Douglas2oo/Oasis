@@ -52,12 +52,14 @@ const publishArticle = async () => {
     let data = {
         content: articleText.value, // 使用文本框中的内容
         author: Userdata.id, // 使用当前用户的 ID
+        created_time: formattedDate, // 使用当前北京时间
+        like: Array(0)
 
     };
 
     try {
 
-        const response = await axios.post('http://127.0.0.1:8000//article/', data, { withCredentials: true })
+        const response = await axios.post('http://127.0.0.1:8000/article/', data, { withCredentials: true })
 
 
         // 发送请求给后端

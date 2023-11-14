@@ -94,14 +94,14 @@ const registersubmit = async () => {
         if (response.data.success) {
             console.log("register success")
             console.log(response.data)
-            Userdata.id = response.data.user_id
-            Userdata.name = response.data.name
-            Userdata.account = response.data.accountid
-            Userdata.email = response.data.email
-            Userdata.birthday = response.data.birthday
+            Userdata.id = response.data['data']['user_id']
+            Userdata.name = response.data['data']['name']
+            Userdata.account = response.data['data']['account']
+            Userdata.email = response.data['data']['email']
+            Userdata.birthday = response.data['data']['birthday']
             router.push({
                 name: 'ForumSquare',
-                params: {
+                query: {
                     id: Userdata.id,
                     name: Userdata.name,
                     account: Userdata.account,

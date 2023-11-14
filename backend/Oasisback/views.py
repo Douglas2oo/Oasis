@@ -82,12 +82,30 @@ class Userregister(APIView):
                             status=status.HTTP_400_BAD_REQUEST)
     
 
+
+# return all the articles
+
+class AllArticl(APIView):
+    def get(self, request):
+        articles = Article.objects.all()
+        serializer_article = ArticleSerializer(articles, many=True)
+        return Response({'success': 'Get success', 'data':serializer_article.data},)
+    
+
+
+
+
+
+
+# return the user_id of the user's articles
 class ArticleList(APIView):
     def get(self, request,user_id):
         user = User.objects.get(user_id=user_id)
         serializer_article = ArticleSerializer(user.article_set.all(), many=True)
         return Response(serializer_article.data)
     
+
+
 
 
 class ArticleDetail(APIView):

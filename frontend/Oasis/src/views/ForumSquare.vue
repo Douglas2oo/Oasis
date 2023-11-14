@@ -26,7 +26,24 @@ import { useRouter } from 'vue-router';
 
 
 import { UserFilled } from '@element-plus/icons-vue'
-const alist = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+const alist = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] // 用来显示幻灯片的内容，通过列表，这是个样例，它的长度决定走马灯的页数，它的内容决定走马灯的内容
+
+
+
+// 拿到所有文章的数据,进行整理并且加到列表里面
+const articlelist = ref([])
+const GetAllArticle = async () => {
+    try {
+        const response = await axios.get(`http://localhost:8000/articlelist/`)
+        if (response.status == 200) {
+            console.log("get article success")
+            console.log(response.data)
+            articlelist.value = response.data
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 
 
