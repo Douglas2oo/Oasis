@@ -81,7 +81,7 @@ const submitform = async() =>{
       Userdata.birthday = response.data['data']['birthday']
 
       router.push({
-        name: 'home',
+        name: 'ForumSquare',
         query: {
           id: Userdata.id,
           name: Userdata.name,

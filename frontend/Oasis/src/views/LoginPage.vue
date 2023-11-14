@@ -13,7 +13,7 @@
           <h3>Life is a journey</h3>
           <button @click="signUpMode = !signUpMode" class="btn transparent">Sign up</button>
         </div>
-        <img src="@/assets/images/logo.jpg" class="image" alt="" />
+        <img src="@/assets/images/circlelogo.png" class="image" alt="" />
       </div>
 
       <div class="panel right-panel">
@@ -21,7 +21,7 @@
           <h3>Feel the world</h3>
           <button @click="signUpMode = !signUpMode" class="btn transparent">Sign in</button>
         </div>
-        <img src="@/assets/images/logo.jpg" class="image" alt="" />
+        <img src="@/assets/images/circlelogo.png" class="image" alt="" />
       </div>
     </div>
   </div>
@@ -30,7 +30,7 @@
 
 
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
+import { reactive, ref, onMounted } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import LoginForm from '../components/LoginForm.vue'
 import RegisterForm from '../components/RegisterForm.vue'
@@ -116,6 +116,7 @@ const registerrules: FormRules = {
 
 
 
+
 </script>
 
 
@@ -183,13 +184,12 @@ const registerrules: FormRules = {
 }
 
 .social-icon:hover {
-  color: #4481eb;
-  border-color: #4481eb;
+  color: #4BA474;
+  border-color: #4BA474;
 }
 
 .btn {
-  width: 150px;
-  background-color: #5995fd;
+  width: 15px;
   border: none;
   outline: none;
   height: 49px;
@@ -200,10 +200,11 @@ const registerrules: FormRules = {
   margin: 10px 0;
   cursor: pointer;
   transition: 0.5s;
+  
 }
 
 .btn:hover {
-  background-color: #4d84e2;
+  background-color: #4BA474;
 }
 
 .panels-container {
@@ -216,6 +217,7 @@ const registerrules: FormRules = {
   grid-template-columns: repeat(2, 1fr);
 }
 
+/* 大板块 */
 .container:before {
   content: "";
   position: absolute;
@@ -224,16 +226,17 @@ const registerrules: FormRules = {
   top: -10%;
   right: 48%;
   transform: translateY(-50%);
-  background-image: linear-gradient(-45deg, #4481eb 0%, #04befe 100%);
+  background-image: linear-gradient(-30deg, rgb(93, 203, 145) 0%, #7de0ab 100%);
   transition: 1.8s ease-in-out;
   border-radius: 50%;
   z-index: 6;
 }
 
 .image {
-  width: 100%;
+  width: 30%;
   transition: transform 1.1s ease-in-out;
   transition-delay: 0.4s;
+  
 }
 
 .panel {
@@ -280,6 +283,7 @@ const registerrules: FormRules = {
   height: 41px;
   font-weight: 600;
   font-size: 0.8rem;
+  
 }
 
 .right-panel .image,
@@ -505,5 +509,8 @@ form.sign-up-form {
   }
 }
 
+.btn{
+  background-color: #4BA474;
+}
 
 </style>
