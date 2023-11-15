@@ -56,9 +56,6 @@ const Userdata = reactive({
     birthday: router.currentRoute.value.query.birthday,
 })
 
-console.log(Userdata)
-
-//http://localhost:5173/home?id=669b0ebb-4d19-4e7b-8f65-b61912337741&name=111&account=111&email=123@163.com&birthday=2023-11-01
 
 const path1 = '/ForumSquare?id='+Userdata.id+'&name='+Userdata.name+'&account='+Userdata.name+'&email='+Userdata.email+'&birthday='+Userdata.birthday; 
 // 替换为实际的路径
@@ -81,7 +78,7 @@ const handleClose = (key: string, keyPath: string[]) => {
 
 
 const handleSelect = (key: string, keyPath: string[]) => {
-    console.log(key, keyPath)
+
 }
 
 

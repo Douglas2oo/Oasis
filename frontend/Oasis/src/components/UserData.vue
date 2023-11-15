@@ -42,7 +42,6 @@ const router = useRouter();
 const Userdata = reactive({
   id: router.currentRoute.value.query.id,
 })
-console.log("get id:", Userdata.id)
 
 // 处理头像上传成功
 const handleAvatarSuccess = (file) => {

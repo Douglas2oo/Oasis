@@ -28,9 +28,6 @@ const router = useRouter();
 const Userdata = reactive({
   id: router.currentRoute.value.query.id,
 })
-console.log("get id:", Userdata.id)
-
-
 
 const form = reactive({
   content: '',
@@ -42,11 +39,8 @@ let store = useStore()
 // 监听 uplistData 的变化
 
 watchEffect(() => {
-
-  console.log("article data: ", store.state.homeview.uplistData);
   const content1 = store.state.homeview.uplistData.content;
   const id = store.state.homeview.uplistData.id;
-  console.log("id: ", id)
   console.log("content: ", content1)
   // 将数据存储在localStorage中
   localStorage.setItem('content', JSON.stringify(content1))

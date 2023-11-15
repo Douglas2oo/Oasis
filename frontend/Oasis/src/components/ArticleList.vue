@@ -6,10 +6,9 @@
       <el-table-column>
         <template #default="props">
           <div class="articlebox">
-            <p class="content">Content: {{ props.row.content }}</p>
-            <div class="flex-container "><time>{{ props.row.create_time }}</time>
-
-              <div class="likescomments">👍{{ props.row.likes }} 💬{{ props.row.comments }}</div>
+            <p class="content">{{ props.row.content }}</p>
+            <div class="flex-container ">
+              <div class="likescomments"><button v-on:click="props.row.likes.length++" class="likesbtn">👍</button>{{ props.row.likes.length }} 💬0</div>
             </div>
             <div class="btn">
               <el-button size="small" @click="handleEdit(props.$index, props.row)" type="success">Edit</el-button>
@@ -46,7 +45,7 @@ let store = useStore()
 
 // 设置需要的参数与方法
 const currentPage4 = ref(1)
-const pageSize4 = ref(15)
+const pageSize4 = ref(10)
 
 // 修改下面得方法
 const handleSizeChange = (val: number) => {
@@ -96,14 +95,11 @@ watch(router.currentRoute, (to, from) => {
   Userdata.account = to.query.account
   Userdata.email = to.query.email
   Userdata.birthday = to.query.birthday
-  console.log(Userdata)
 })
 
 const GetArticle = async () => {
   try {
-    console.log("user data is " + Userdata)
     const id = Userdata.id//拿到user_id
-    console.log("get id: " + id)
     const response = await axios.get(`http://127.0.0.1:8000/articlelist/user_id/${id}`)
     if (response.status == 200) {
       console.log("get article success")
@@ -127,6 +123,13 @@ onMounted(() => {
 
 
 <style>
+.likesbtn {
+  background-color: white;
+  padding: 0;
+  border: none;
+}
+
+
 .block {
   border-radius: 20px;
 }

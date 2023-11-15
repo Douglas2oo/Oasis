@@ -3,9 +3,6 @@
         <h1>ForumSquare</h1>
     </div>
     <div class="demo-type">
-        <div>
-            <el-avatar :icon="UserFilled" />
-        </div>
     </div>
     <div class="block text-center">
         <span class="demonstration">The card Square</span>
@@ -24,8 +21,6 @@ import { reactive, toRefs, watch, onMounted, ref } from 'vue'
 import axios from 'axios'
 import { useRouter } from 'vue-router';
 
-
-import { UserFilled } from '@element-plus/icons-vue'
 const alist = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] // 用来显示幻灯片的内容，通过列表，这是个样例，它的长度决定走马灯的页数，它的内容决定走马灯的内容
 
 

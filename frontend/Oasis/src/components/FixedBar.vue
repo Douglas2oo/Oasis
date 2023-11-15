@@ -15,7 +15,6 @@ const router = useRouter();
 const Userdata = reactive({
     id: router.currentRoute.value.query.id,
 })
-console.log("get id:", Userdata.id)
 
 // 创建 ref 包装的文本框数据
 const articleText = ref('');
