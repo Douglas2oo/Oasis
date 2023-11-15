@@ -42,45 +42,6 @@ watch(router.currentRoute, (to, from) => {
 })
 
 
-const GetArticle = async () => {
-    try {
-        console.log("user data is " + Userdata)
-        const id = Userdata.id//拿到user_id
-        console.log("id is " + id)
-        const response = await axios.get(`http://localhost:8000/articlelist/user_id/${id}`)
-        if (response.status == 200) {
-            console.log("get article success")
-            console.log(response.data)
-
-            // 文章数据在里面,长这个样，只要content(3) [{…}, {…}, {…}]
-            // 0
-            // : 
-            // {id: 2, author: '7b7b94ce-0638-46f7-aacd-318f4e2418ac', content: 'sdfgdff43853475834753fd', create_time: '2023-11-02T09:57:04.022852Z', likes: Array(0)}
-            // 1
-            // : 
-            // {id: 3, author: '7b7b94ce-0638-46f7-aacd-318f4e2418ac', content: 'sf发货及时反馈和按附件啊', create_time: '2023-11-12T13:03:17.185224Z', likes: Array(0)}
-            // 2
-            // : 
-            // {id: 4, author: '7b7b94ce-0638-46f7-aacd-318f4e2418ac', content: 'sf发货及时反馈哈克警方哈哈发和按附件啊', create_time: '2023-11-12T13:03:22.973755Z', likes: Array(0)}
-
-
-        }
-    } catch (error) {
-        console.log(error)
-        console.log("get article failed")
-    }
-
-}
-
-onMounted(() => {
-    GetArticle()
-
-})
-
-
-
-
-
 
 
 
