@@ -31,6 +31,10 @@ class Article(models.Model):
         return self.content
     
 
+    def get_likes_count(self):
+        return self.likes.count()
+    
+
 
 
 
