@@ -115,7 +115,7 @@ class ArticleDetail(APIView):
             likes = article.get_likes_count()
             comments = CommentSerializer(Comment.objects.filter(article=article), many=True)
             if article:
-                return Response({'success': 'Get success', 'data': ArticleSerializer(article).data},
+                return Response({'success': 'Get success', 'data': ArticleSerializer(article).data,'likes':likes,'comments':len(comments.data)},
                 status=status.HTTP_200_OK )
             else:
                 return Response({'error': 'No such article'},
@@ -223,15 +223,6 @@ class Commentdetail(APIView):
 
 
 class Likes(APIView):
-
-    def get(self, request):
-        article_id = request.data.get('article_id')
-        article = Article.objects.get(id=article_id)
-        likes = article.get_likes_count()
-        return Response({'success': 'Get success', 'data':likes},
-                        status=status.HTTP_200_OK)
-
-
 
 
 
