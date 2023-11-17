@@ -88,8 +88,18 @@ class Userregister(APIView):
 class AllArticl(APIView):
     def get(self, request):
         articles = Article.objects.all()
+        for article in articles:
+            comments = Comment.objects.filter(article=article)
+            serializer_comment = CommentSerializer(comments, many=True)
+            comments_count = len(serializer_comment.data)
+            article.comments_count = comments_count
+            article.save()
+        for article in articles:
+            likes = article.get_likes_count()
+            article.likes_count = likes
+            article.save()
         serializer_article = ArticleSerializer(articles, many=True)
-        return Response({'success': 'Get success', 'data':serializer_article.data},)
+        return Response({'success': 'Get success', 'data':serializer_article.data},status=status.HTTP_200_OK) 
     
 
 
@@ -101,7 +111,18 @@ class AllArticl(APIView):
 class ArticleList(APIView):
     def get(self, request,user_id):
         user = User.objects.get(user_id=user_id)
-        serializer_article = ArticleSerializer(user.article_set.all(), many=True)
+        articles = user.article_set.all()
+        for article in articles:
+            comments = Comment.objects.filter(article=article)
+            serializer_comment = CommentSerializer(comments, many=True)
+            comments_count = len(serializer_comment.data)
+            article.comments_count = comments_count
+            article.save()
+        for article in articles:
+            likes = article.get_likes_count()
+            article.likes_count = likes
+            article.save()
+        serializer_article = ArticleSerializer(articles, many=True)
         return Response(serializer_article.data)
     
 
