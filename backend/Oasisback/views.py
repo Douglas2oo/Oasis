@@ -115,7 +115,7 @@ class ArticleDetail(APIView):
             likes = article.get_likes_count()
             comments = CommentSerializer(Comment.objects.filter(article=article), many=True)
             if article:
-                return Response({'success': 'Get success', 'data': ArticleSerializer(article).data, 'likes': likes,'comments': comments.data},
+                return Response({'success': 'Get success', 'data': ArticleSerializer(article).data},
                 status=status.HTTP_200_OK )
             else:
                 return Response({'error': 'No such article'},
@@ -216,4 +216,39 @@ class Commentdetail(APIView):
                             status=status.HTTP_200_OK)
         else:
             return Response({'error': 'No such comment'},
+                            status=status.HTTP_400_BAD_REQUEST)
+        
+
+
+
+
+class Likes(APIView):
+
+    def get(self, request):
+        article_id = request.data.get('article_id')
+        article = Article.objects.get(id=article_id)
+        likes = article.get_likes_count()
+        return Response({'success': 'Get success', 'data':likes},
+                        status=status.HTTP_200_OK)
+
+
+
+
+
+    def post(self, request):
+        article_id = request.data.get('article_id')
+        article = Article.objects.get(id=article_id)
+        user_id = request.data.get('user_id')
+        user = User.objects.get(user_id=user_id)
+        try:
+            if article.likes.filter(user_id=user_id).exists():
+                article.likes.remove(user)
+                return Response({'success': 'Unlike success'},
+                                status=status.HTTP_200_OK)
+            else:
+                article.likes.add(user)
+                return Response({'success': 'Like success'},
+                                status=status.HTTP_200_OK)
+        except:
+            return Response({'error': 'No such user or article'},
                             status=status.HTTP_400_BAD_REQUEST)
