@@ -1,7 +1,9 @@
 let homeview: Object = {
   state: {
     dialogFormVisible: false,
+    commentVisible: false,
     uplistData: {},
+    Comment: {}
   },
   getters: {},
   mutations: {
@@ -12,6 +14,14 @@ let homeview: Object = {
     },
     DIALOG(state: any) {
       state.dialogFormVisible = !state.dialogFormVisible;
+    },
+    OPEN_DIA(state: any, paylog: any) {
+      state.commentVisible = !state.commentVisible;
+      state.Comment = paylog;
+      console.log(state.Comment);
+    },
+    CLOSE_DIA(state: any) {
+      state.commentVisible = !state.commentVisible;
     },
   },
   actions: {},

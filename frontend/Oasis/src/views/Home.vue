@@ -1,5 +1,5 @@
 <template>
-    <div class="common-layout">
+    <div class="common-layout" style="background: linear-gradient(to top, rgb(91, 194, 91),white);">
 
         <Na />
 

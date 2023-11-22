@@ -100,15 +100,15 @@ let closeDialog = (num: number) => {
       article_id: form.article_id,
       author: Userdata.id,
       create_time: formatDateTime,
-      likes: Array(0)
+
 
     }
 
     axios.put('http://127.0.0.1:8000/article/', data, { withCredentials: true })
-
+    window.location.reload()
   }
   store.commit("DIALOG")
-  window.location.reload()
+
 }
 
 
