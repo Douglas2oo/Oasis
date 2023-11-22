@@ -1,7 +1,9 @@
 <!-- components/FixedBar.vue -->
 <template>
     <div class="fixed-bar">
-        <textarea v-model="articleText" placeholder="Write your new article here..."></textarea>
+        <textarea v-model="articleText" placeholder="Write your new article here..." 
+        :maxlength="200"
+        ></textarea>
         <button @click="publishArticle">Publish</button>
     </div>
 </template>

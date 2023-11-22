@@ -88,8 +88,18 @@ class Userregister(APIView):
 class AllArticl(APIView):
     def get(self, request):
         articles = Article.objects.all()
+        for article in articles:
+            comments = Comment.objects.filter(article=article)
+            serializer_comment = CommentSerializer(comments, many=True)
+            comments_count = len(serializer_comment.data)
+            article.comments_count = comments_count
+            article.save()
+        for article in articles:
+            likes = article.get_likes_count()
+            article.likes_count = likes
+            article.save()
         serializer_article = ArticleSerializer(articles, many=True)
-        return Response({'success': 'Get success', 'data':serializer_article.data},)
+        return Response({'success': 'Get success', 'data':serializer_article.data},status=status.HTTP_200_OK) 
     
 
 
@@ -101,7 +111,18 @@ class AllArticl(APIView):
 class ArticleList(APIView):
     def get(self, request,user_id):
         user = User.objects.get(user_id=user_id)
-        serializer_article = ArticleSerializer(user.article_set.all(), many=True)
+        articles = user.article_set.all()
+        for article in articles:
+            comments = Comment.objects.filter(article=article)
+            serializer_comment = CommentSerializer(comments, many=True)
+            comments_count = len(serializer_comment.data)
+            article.comments_count = comments_count
+            article.save()
+        for article in articles:
+            likes = article.get_likes_count()
+            article.likes_count = likes
+            article.save()
+        serializer_article = ArticleSerializer(articles, many=True)
         return Response(serializer_article.data)
     
 
@@ -112,9 +133,11 @@ class ArticleDetail(APIView):
     def get(self, request):
             article_id = request.data.get('article_id')
             article = Article.objects.get(id=article_id)
+            likes = article.get_likes_count()
+            comments = CommentSerializer(Comment.objects.filter(article=article), many=True)
             if article:
-                return Response({'success': 'Get success', 'data':ArticleSerializer(article).data},
-                                status=status.HTTP_200_OK)
+                return Response({'success': 'Get success', 'data': ArticleSerializer(article).data,'likes':likes,'comments':len(comments.data)},
+                status=status.HTTP_200_OK )
             else:
                 return Response({'error': 'No such article'},
                                 status=status.HTTP_400_BAD_REQUEST)
@@ -214,4 +237,30 @@ class Commentdetail(APIView):
                             status=status.HTTP_200_OK)
         else:
             return Response({'error': 'No such comment'},
+                            status=status.HTTP_400_BAD_REQUEST)
+        
+
+
+
+
+class Likes(APIView):
+
+
+
+    def post(self, request):
+        article_id = request.data.get('article_id')
+        article = Article.objects.get(id=article_id)
+        user_id = request.data.get('user_id')
+        user = User.objects.get(user_id=user_id)
+        try:
+            if article.likes.filter(user_id=user_id).exists():
+                article.likes.remove(user)
+                return Response({'success': 'Unlike success'},
+                                status=status.HTTP_200_OK)
+            else:
+                article.likes.add(user)
+                return Response({'success': 'Like success'},
+                                status=status.HTTP_200_OK)
+        except:
+            return Response({'error': 'No such user or article'},
                             status=status.HTTP_400_BAD_REQUEST)

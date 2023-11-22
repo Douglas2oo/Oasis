@@ -11,12 +11,10 @@ class UserSerializer(serializers.ModelSerializer):
 class ArticleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Article
-        fields = ['id','author', 'content', 'create_time', 'likes']
+        fields = ['id','author', 'content', 'create_time', 'likes', 'likes_count','comments_count']
 
 
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = ['id','author', 'article', 'comment', 'create_time']
-
-

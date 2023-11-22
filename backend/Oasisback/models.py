@@ -25,11 +25,16 @@ class Article(models.Model):
     content = models.TextField()
     create_time = models.DateTimeField(auto_now_add=True)
     likes = models.ManyToManyField(User, related_name='likes', blank=True)
+    likes_count = models.IntegerField(default=0)
+    comments_count = models.IntegerField(default=0)
 
 
     def __str__(self):
         return self.content
     
+
+    def get_likes_count(self):
+        return self.likes.count()
 
 
 
@@ -44,6 +49,8 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.content
+    
+    
     
 
 

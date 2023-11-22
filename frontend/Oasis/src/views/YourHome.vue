@@ -1,8 +1,8 @@
 <template>
-  <div class="common-layout">
+  <div class="common-layout" >
 
 
-    <el-container>
+   
 
 
       <el-header class="head">
@@ -10,8 +10,7 @@
       </el-header>
       <el-main>
         <div>
-
-          <PersonalData />
+          <PersonalData style="margin-top: 50px;" />
         </div>
         <h2>Your Articles</h2>
         <ArticleList />
@@ -21,7 +20,7 @@
 
 
 
-    </el-container>
+    
 
   </div>
 </template>
@@ -50,16 +49,46 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f4f4f4;
+  background-color: #9a8383;
+  display: flex;
+  align-items: center;
+
 }
 
 /* Center the main title */
 h1 {
   text-align: center;
   color: #333;
-  background-color: #f9f9f9;
+  background: linear-gradient(to top left, #5ccf5c, #3ab156);
   padding: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 50px;
+  border-radius: 60px;
+  width: 50%;
+
+}
+
+h2 {
+
+  color: #333;
+  background: linear-gradient(to top left, #5ccf5c, #3ab156);
+  padding: 20px;
+  margin-bottom: 0px;
+  border-radius: 60px;
+  margin-top: 20px;
+  width: 8%;
+  font-size: 30px;
+  font-weight: bold;
+
+}
+
+.head {
+  text-align: center;
+  font-size: 50px;
+  font-weight: bold;
+  margin-bottom: -15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* 高度100% */

@@ -15,7 +15,7 @@
         <el-menu-item :index="path1" class="custom-menu-item">
             <div class="demo-type">
                 <div style="padding-bottom: 15px; ">
-                    <div>
+                    <div style="font-weight: bold;">
                         ForumSquare
                     </div>
                 </div>
@@ -57,9 +57,9 @@ const Userdata = reactive({
 })
 
 
-const path1 = '/ForumSquare?id='+Userdata.id+'&name='+Userdata.name+'&account='+Userdata.name+'&email='+Userdata.email+'&birthday='+Userdata.birthday; 
+const path1 = '/ForumSquare?id=' + Userdata.id + '&name=' + Userdata.name + '&account=' + Userdata.name + '&email=' + Userdata.email + '&birthday=' + Userdata.birthday;
 // 替换为实际的路径
-const path2 = '/home?id='+Userdata.id+'&name='+Userdata.name+'&account='+Userdata.name+'&email='+Userdata.email+'&birthday='+Userdata.birthday; // 替换为实际的路径
+const path2 = '/home?id=' + Userdata.id + '&name=' + Userdata.name + '&account=' + Userdata.name + '&email=' + Userdata.email + '&birthday=' + Userdata.birthday; // 替换为实际的路径
 
 
 onMounted(() => {

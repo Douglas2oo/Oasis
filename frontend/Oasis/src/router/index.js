@@ -33,7 +33,7 @@ const router = createRouter({
           component: () => import('../views/ForumSquare.vue'),
 
         },]
-    },
+    }
 
   ]
 })

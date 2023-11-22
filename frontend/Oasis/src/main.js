@@ -9,6 +9,7 @@ import router from './router'
 import store from './stores'
 
 
+
 const app = createApp(App)
 
 app.config.globalProperties.$axios = axios

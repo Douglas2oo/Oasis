@@ -13,17 +13,17 @@
           </el-upload>
         </div>
         <div class="block1">
-          <el-form-item label="email" prop="email">
+          <el-form-item label="Email" prop="email" style="font-weight: bold;">
             <el-input class="smallinput" v-model="user.email" disabled></el-input>
           </el-form-item>
-          <el-form-item label="account" prop="account">
+          <el-form-item label="Account" prop="account" style="font-weight: bold;">
             <el-input class="smallinput" v-model="user.account" disabled></el-input>
           </el-form-item>
-          <el-form-item label="username" prop="name">
+          <el-form-item label="Username" prop="name" style="font-weight: bold;">
             <el-input class="smallinput" v-model="user.name" disabled></el-input>
           </el-form-item>
-          <el-form-item label="Birthday" prop='birthday'>
-            <el-date-picker v-model="user.birthday" type="date" disabled/>
+          <el-form-item label="Birthday" prop='birthday' style="font-weight: bold;">
+            <el-date-picker v-model="user.birthday" type="date" disabled />
           </el-form-item>
 
         </div>
