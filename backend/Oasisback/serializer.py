@@ -6,6 +6,11 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ['user_id', 'create_time', 'name', 'email', 'account', 'birthday', 'password', 'password2']
 
+class UserHeaderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["user_id","avatar"]
+
 
 
 class ArticleSerializer(serializers.ModelSerializer):

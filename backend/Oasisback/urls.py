@@ -1,6 +1,11 @@
-from django.urls import path
 from . import views
 from django.shortcuts import render
+from django.views.static import serve
+from django.conf import settings
+from django.urls import path,re_path,include
+
+
+
 
 def home_view(request):
     return render(request, 'home.html')
@@ -17,5 +22,9 @@ urlpatterns = [
     path('articlelist/', views.AllArticl.as_view(), name='all_article'),
     path('commentlist/user_id/<str:user_id>/article_id/<int:article_id>', views.CommentList.as_view(), name='comment_list'),
     path('comment/', views.Commentdetail.as_view(), name='comment'),
-    path('likes/', views.Likes.as_view(), name='likes')
+    path('likes/', views.Likes.as_view(), name='likes'),
+    path('avatar/', views.Avatar.as_view(), name='avatar'),
+    re_path(r'^media/(?P<path>.*)$',serve,{
+        'document_root':settings.MEDIA_ROOT
+    })
 ]

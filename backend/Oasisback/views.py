@@ -4,10 +4,14 @@ from django.contrib.auth import authenticate
 from rest_framework import status
 from rest_framework.decorators import APIView
 from rest_framework.response import Response
+from django.conf import settings
+import os
+from django.http import Http404
 from .serializer import (
     UserSerializer,
     ArticleSerializer,
     CommentSerializer,
+    UserHeaderSerializer
 )
 from .models import (
     User, 
@@ -29,7 +33,44 @@ class UserList(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors)
+    
 
+
+
+class Avatar(APIView):
+    def get(self, request):
+        user_id = request.data.get('user_id')
+        try:
+            user = User.objects.get(user_id=user_id)
+        except User.DoesNotExist:
+            return Response({'error': 'No such user'}, status=status.HTTP_404_NOT_FOUND)
+
+        avatarserializer = UserHeaderSerializer(user)
+        serializer_data = avatarserializer.data
+        serializer_data['avatar'] = request.build_absolute_uri(serializer_data.get('avatar'))
+        return Response({'success': 'Get success', 'data': serializer_data}, status=status.HTTP_200_OK)
+
+    def put(self, request):
+        user_id = request.data.get('user_id')
+        try:
+            user = User.objects.get(user_id=user_id)
+        except User.DoesNotExist:
+            return Response({'error': 'No such user'}, status=status.HTTP_404_NOT_FOUND)
+
+        avatar = user.avatar
+        if avatar:
+            try:
+                avatar.delete()  # Using Django's FileField delete method
+            except Exception as e:
+                pass
+                # Handle specific exception e.g., OSError or log the error
+
+        serializer = UserHeaderSerializer(user, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'success': 'Put success', 'data': serializer.data}, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class Userlogin(APIView):
@@ -263,4 +304,5 @@ class Likes(APIView):
                                 status=status.HTTP_200_OK)
         except:
             return Response({'error': 'No such user or article'},
+                            status=status.HTTP_400_BAD_REQUEST)
 
