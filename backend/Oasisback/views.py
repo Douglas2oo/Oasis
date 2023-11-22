@@ -263,4 +263,4 @@ class Likes(APIView):
                                 status=status.HTTP_200_OK)
         except:
             return Response({'error': 'No such user or article'},
-                            status=status.HTTP_400_BAD_REQUEST)
+
