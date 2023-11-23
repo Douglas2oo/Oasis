@@ -1,9 +1,12 @@
 <template>
+    
   <div class="container" :class="{ 'sign-up-mode': signUpMode }">
     <div class="forms-container">
+      <Background />
       <div class="signin-signup">
         <LoginForm :ruleform="ruleform" :rules="rules" />
-        <RegisterForm :registerrules="registerrules" :registerForm="registerForm"/>
+        <RegisterForm :registerrules="registerrules" :registerForm="registerForm" />
+        
       </div>
     </div>
 
@@ -25,6 +28,8 @@
       </div>
     </div>
   </div>
+
+  
 </template>
 
 
@@ -34,6 +39,7 @@ import { reactive, ref, onMounted } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import LoginForm from '../components/LoginForm.vue'
 import RegisterForm from '../components/RegisterForm.vue'
+import Background from '../components/Background.vue'
 
 // 校验规则
 const ruleFormRef = ref<FormInstance>()
@@ -79,9 +85,9 @@ const validatorpass = (rule: any, value: any, callback: any) => {
   } else if (value !== registerForm.value.password) {
     console.log("password2 value:", value)
     console.log()
-    console.log("password value :" , registerForm.value.password)
+    console.log("password value :", registerForm.value.password)
     console.log(reportError)
-      callback(new Error('Two passwords are inconsistent'))
+    callback(new Error('Two passwords are inconsistent'))
   } else {
     callback()
   }
@@ -200,7 +206,7 @@ const registerrules: FormRules = {
   margin: 10px 0;
   cursor: pointer;
   transition: 0.5s;
-  
+
 }
 
 .btn:hover {
@@ -226,7 +232,7 @@ const registerrules: FormRules = {
   top: -10%;
   right: 48%;
   transform: translateY(-50%);
-  background-image: linear-gradient(-30deg, rgb(93, 203, 145) 0%, #7de0ab 100%);
+  background-image: linear-gradient(-30deg, rgb(93, 203, 145,0.6) 0%, #7de0ab 100%);
   transition: 1.8s ease-in-out;
   border-radius: 50%;
   z-index: 6;
@@ -236,7 +242,7 @@ const registerrules: FormRules = {
   width: 30%;
   transition: transform 1.1s ease-in-out;
   transition-delay: 0.4s;
-  
+
 }
 
 .panel {
@@ -283,7 +289,7 @@ const registerrules: FormRules = {
   height: 41px;
   font-weight: 600;
   font-size: 0.8rem;
-  
+
 }
 
 .right-panel .image,
@@ -509,8 +515,7 @@ form.sign-up-form {
   }
 }
 
-.btn{
+.btn {
   background-color: #4BA474;
 }
-
 </style>
