@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from django.conf import settings
 import os
 from django.http import Http404
+from django.contrib.auth.hashers import make_password,check_password
 from .serializer import (
     UserSerializer,
     ArticleSerializer,
@@ -91,7 +92,9 @@ class Userlogin(APIView):
             return Response({'error': 'No such user'},
                             status=status.HTTP_400_BAD_REQUEST)
         else:
-            if user.password == password:
+            hash_password = user.password
+            boolean = check_password(password, hash_password)
+            if boolean:
                 return Response({'success': 'Login success' , 'data':UserSerializer(user).data},
                             status=status.HTTP_200_OK)
             else:
@@ -114,6 +117,12 @@ class Userregister(APIView):
             return Response({'error': 'Account already exists'},
                             status=status.HTTP_400_BAD_REQUEST)
         else:
+            password = request.data.get('password')
+            hash_password = make_password(password)
+            password2 = request.data.get('password2')
+            hash_password2 = make_password(password2)
+            request.data['password'] = hash_password
+            request.data['password2'] = hash_password2
             serializer = UserSerializer(data=request.data)
             if serializer.is_valid():
                 serializer.save()

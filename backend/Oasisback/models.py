@@ -12,8 +12,8 @@ class User(models.Model):
     email = models.EmailField(max_length=100)
     account = models.CharField(max_length=50)
     birthday = models.DateField()
-    password = models.CharField(max_length=50)
-    password2 = models.CharField(max_length=50)
+    password = models.CharField(verbose_name='password', max_length=128)
+    password2 = models.CharField(verbose_name='password2', max_length=128)
     avatar = models.ImageField(upload_to='avatar', default='avatar/default.png', verbose_name='avatar')
 
 
