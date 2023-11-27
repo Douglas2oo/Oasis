@@ -39,7 +39,7 @@ class UserList(APIView):
 
 
 class Avatar(APIView):
-    def get(self, request):
+    def post(self, request):
         user_id = request.data.get('user_id')
         try:
             user = User.objects.get(user_id=user_id)

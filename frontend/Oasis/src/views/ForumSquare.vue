@@ -22,15 +22,16 @@
           <h3 class="small justify-center" text="2xl">
 
             <div class="articlebox">
-              <p class="content" style="line-height: 1.2; margin-top: 100px; font-size: 55px;">{{ (articleItem as
+              <p class="content" style="line-height: 1.2; margin-top: 100px; font-size: 55px;" >{{ (articleItem as
                 any).content }}</p>
               <div class="flex-container">
                 <div class="likescomments">
-                  <button @click="AddLikes((articleItem as any).id, articleItem)" class="likesbtn"
-                    :disabled="(articleItem as any).isLiked" style="font-size: 1.5em;">👍</button>
-                  {{ (articleItem as any).likes_count }}
-                  <button @click="() => handleEdit((articleItem as any).id, articleItem)" class="likesbtn"
-                    style="font-size: 1.3em;">💬 {{ (articleItem as any).comments_count }} </button>
+                  <el-button @click="AddLikes((articleItem as any).id, articleItem)" class="likesbtn"
+                    :disabled="(articleItem as any).isLiked" style="font-size: 1.8em; margin-right: 8px;">
+                    ❤️{{ (articleItem as any).likes_count }}</el-button>
+                  
+                  <el-button @click="() => handleEdit((articleItem as any).id, articleItem)" class="likesbtn"
+                    style="font-size: 1.8em;">💬 {{ (articleItem as any).comments_count }} </el-button>
                 </div>
               </div>
             </div>
@@ -112,10 +113,6 @@ onMounted(() => {
 
 let store = useStore()
 
-const alist = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] // 用来显示幻灯片的内容，通过列表，这是个样例，它的长度决定走马灯的页数，它的内容决定走马灯的内容
-
-
-
 // 拿到所有文章的数据,进行整理并且加到列表里面
 const articlelist = ref({})
 const article = ref({})
@@ -126,6 +123,7 @@ const GetAllArticle = async () => {
       console.log("get article success")
       console.log(response.data)
       articlelist.value = response.data.data
+      Array(articlelist.value).sort((a:any, b:any) => b.likes_count - a.likes_count);
       for (let i = 0; i < 10; i++) {
         article.value[i] = articlelist.value[i]
       }
@@ -136,22 +134,10 @@ const GetAllArticle = async () => {
   }
 }
 
-const GetComment = async () => {
 
-  try {
-    const response = await axios.get(`http://localhost:8000/commentlist/user_id/361cb005-1f25-4bb2-8f7e-333683fef6ff/article_id/20`)
-    if (response.status == 200) {
-      console.log("get Comments success")
-      console.log(response.data)
-    }
-  } catch (error) {
-    console.log(error)
-  }
-}
 
 onMounted(() => {
   GetAllArticle()
-  GetComment()
 })
 
 
@@ -175,7 +161,7 @@ const AddLikes = (index, row) => {
       user_id: Userdata.id,
     })
       .then(function (response) {
-        console.log("success");
+        console.log("add likes success!");
         row.likes_count += 1
       })
       .catch(function (error) {
@@ -221,6 +207,7 @@ const AddLikes = (index, row) => {
   background-color: transparent;
   padding: 0;
   border: none;
+  cursor: pointer;
 }
 
 .articlebox {
