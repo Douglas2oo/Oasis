@@ -6,18 +6,19 @@
       <div class="flex-container ">
         <el-collapse v-model="activeName" accordion style="width:100%; ">
           <el-collapse-item v-for="(articleItem, index) in activeArticles" class="comment"
-            style="width:100%;margin-right:-10px; margin-bottom: 10px;position: relative; "
+            style="width:100%;margin-right:-10px; margin-bottom: 15px;position: relative; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+             min-height: 75px;"
             @click="GetComment((articleItem as any).author, (articleItem as any).id)">
             <template #title>
-              <p class="content">{{ (articleItem as any).content }}</p>
+              <p class="content" style="margin-left: 20px;">{{ (articleItem as any).content }}</p>
               <div class="btn">
                 <el-button size="small" @click="handleEdit(index, articleItem)"
                   style="background-color: #5ccf5c; color: white;">Edit</el-button>
-                <el-button size="small" @click="handleDelete(index, articleItem)">Delete</el-button>
+                <el-button size="small" @click="handleDelete(index, articleItem)" style="margin-right: 8px;">Delete</el-button>
               </div>
-              <div class="likescomments" style="position: absolute; right: 5vh;"><button class="likesbtn"
-                  style="margin-right: 5px;">👍</button>{{ (articleItem as any).likes_count }} 💬{{ (articleItem as
-                    any).comments_count }}
+              <div class="likescomments" style="position: absolute; right: 5vh;"><el-button class="likesbtn"
+                  style="margin-right: 2px;">❤️{{ (articleItem as any).likes_count }} </el-button><el-button class="likesbtn">💬{{ (articleItem as
+                    any).comments_count }}</el-button>
               </div>
 
             </template>

@@ -26,7 +26,9 @@
         <el-menu-item :index="path2" class="custom-menu-item">
             <div class="demo-type">
                 <div style="padding-bottom: 15px;">
-                    <el-avatar src="用户头像" />
+                    
+                    <el-avatar v-if="avatar == 'http://127.0.0.1:8000/media/avatar/default.png'" />
+                    <el-avatar v-else :src="avatar" alt="Avatar" />
                 </div>
 
             </div>
@@ -75,14 +77,30 @@ const handleClose = (key: string, keyPath: string[]) => {
     console.log(key, keyPath)
 }
 
-
-
 const handleSelect = (key: string, keyPath: string[]) => {
 
 }
 
+let avatar = ref('')
 
+const GetAvatar = async () => {
+try {
+const response = await axios.post('http://127.0.0.1:8000/avatar/', {
+  user_id: Userdata.id
+});
+  if (response.status == 200) {
+    console.log("get avatar success")
+    console.log("avatar",response.data.data.avatar)
+    avatar.value = response.data.data.avatar
+  }
+} catch (error) {
+  console.log(error)
+}
+}
 
+onMounted(() => {
+    GetAvatar();
+})
 
 
 

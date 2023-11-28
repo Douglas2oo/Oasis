@@ -9,9 +9,6 @@
     <el-form-item>
       <el-button type="primary" class="submit-btn" @click="submitform">Sign in</el-button>
     </el-form-item>
-    <div class="tiparea">
-      <a> find password </a>
-    </div>
   </el-form>
 </template>
 

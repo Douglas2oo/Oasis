@@ -3,14 +3,14 @@
     <el-card class="box" style="width: 70%">
       <el-form :model="user" label-width="80px" style="padding-right: 20px">
         <div style="margin: 15px; text-align: center">
-          <el-upload class="avatar-uploader" action=" http://localhost:8000/user" :show-file-list="false"
-            :on-success="handleAvatarSuccess">
-            <img v-if="user.avatar" :src="user.avatar" class="avatar" />
-            <div v-else style="padding-bottom: 15px;">
-              <el-avatar class="el-icon-plus avatar-uploader-icon" src="用户头像" />
-            </div>
-
+          <el-upload name="file" ref="upload" class="avatar-uploader" accept=".png,.jpg,.jpeg"
+            :http-request="handleAvatarSuccess" :show-file-list="false">
+            <el-avatar v-if="avatar == 'http://127.0.0.1:8000/media/avatar/default.png'"  class="avatar" />
+              <el-avatar v-else class="el-icon-plus avatar-uploader-icon" :src="avatar"/>
+            
           </el-upload>
+
+
         </div>
         <div class="block1">
           <el-form-item label="Email" prop="email" style="font-weight: bold;">
@@ -34,7 +34,7 @@
 </template>
   
 <script setup>
-import { reactive } from 'vue';
+import { reactive, ref, onMounted } from 'vue';
 import axios from 'axios'
 import { useRouter } from "vue-router"
 
@@ -43,20 +43,69 @@ const Userdata = reactive({
   id: router.currentRoute.value.query.id,
 })
 
+
+
 // 处理头像上传成功
-const handleAvatarSuccess = (file) => {
-  // 把user的头像属性换成上传的图片的链接
-  user.value.avatar = URL.createObjectURL(file.raw);
+const handleAvatarSuccess = (response) => {
+  console.log('File uploaded successfully!');
+  // 处理头像上传成功
+  console.log('avatar', response.file);
+   // 假设后端返回的头像 URL 存在 response.url 中
+  uploadToBackend(response.file); // 调用上传到后端的函数
 };
-// const handleAvatarSuccess = (file) => {
-//   // 把user的头像属性换成上传的图片的链接
-//   user.value.avatar = URL.createObjectURL(file.raw);
-// };
+
+
+const uploadToBackend = (avatarFile) => {
+  
+  // 将头像上传到后端
+  axios.put('http://localhost:8000/avatar/', {
+    user_id: Userdata.id,
+    avatar: avatarFile,
+  }, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  })
+    .then(response => {
+      console.log('Backend response:', response);
+      // 可以在这里处理后端的其他响应
+      console.log('avatar', avatarFile);
+    })
+    .catch(error => {
+      console.error('Error uploading to backend:', error);
+      // 处理上传到后端的错误
+    });
+};
+
+
+let avatar = ref('')
+
+const GetAvatar = async () => {
+  try {
+    const response = await axios.post('http://127.0.0.1:8000/avatar/', {
+      user_id: Userdata.id
+    });
+    if (response.status == 200) {
+      console.log("get avatar success")
+      console.log(response.data.data.avatar)
+      avatar.value = response.data.data.avatar
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+onMounted(() => {
+  GetAvatar();
+})
+
+
 
 const user = reactive({
   name: "",
   email: "",
 });
+
 // 向后端发起请求
 axios.get('http://localhost:8000/login/')
   .then(response => {
