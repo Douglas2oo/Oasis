@@ -41,7 +41,6 @@ let store = useStore()
 watchEffect(() => {
   const content1 = store.state.homeview.uplistData.content;
   const id = store.state.homeview.uplistData.id;
-  console.log("content: ", content1)
   // 将数据存储在localStorage中
   localStorage.setItem('content', JSON.stringify(content1))
   localStorage.setItem('id', JSON.stringify(id))

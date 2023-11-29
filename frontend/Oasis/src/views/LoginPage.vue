@@ -28,7 +28,14 @@
       </div>
     </div>
   </div>
-
+  <el-dialog class="BOX" v-model="store.state.homeview.loginVisible" title="Login failed." style="border-radius: 2vh;">
+    <span>Invalid account or password!</span>
+   
+  </el-dialog>
+  <el-dialog class="BOX" v-model="store.state.homeview.registerVisible" title="Register failed." style="border-radius: 2vh;">
+    <span>Please verify the entered information for accuracy.</span>
+   
+  </el-dialog>
   
 </template>
 
@@ -39,7 +46,10 @@ import { reactive, ref, onMounted } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import LoginForm from '../components/LoginForm.vue'
 import RegisterForm from '../components/RegisterForm.vue'
-import Background from '../components/Background.vue'
+import Background from '../components/background.vue'
+import { useStore } from 'vuex'
+
+const store = useStore()
 
 // 校验规则
 const ruleFormRef = ref<FormInstance>()
@@ -83,10 +93,6 @@ const validatorpass = (rule: any, value: any, callback: any) => {
   if (value === '') {
     callback(new Error('Please input password again'))
   } else if (value !== registerForm.value.password) {
-    console.log("password2 value:", value)
-    console.log()
-    console.log("password value :", registerForm.value.password)
-    console.log(reportError)
     callback(new Error('Two passwords are inconsistent'))
   } else {
     callback()
@@ -190,7 +196,7 @@ const registerrules: FormRules = {
 }
 
 .social-icon:hover {
-  color: #4BA474;
+  color: #3db173;
   border-color: #4BA474;
 }
 
