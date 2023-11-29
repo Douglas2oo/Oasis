@@ -5,19 +5,19 @@
 
       <div class="flex-container ">
         <el-collapse v-model="activeName" accordion style="width:100%; ">
-          <el-collapse-item v-for="(articleItem, index) in activeArticles" class="comment"
-            style="width:100%;margin-right:-10px; margin-bottom: 15px;position: relative; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-             min-height: 75px;"
-            @click="GetComment((articleItem as any).author, (articleItem as any).id)">
+          <el-collapse-item v-for="(articleItem, index) in activeArticles" class="comment" style="width:100%;margin-right:-10px; margin-bottom: 15px;position: relative; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+             min-height: 75px;" @click="GetComment((articleItem as any).author, (articleItem as any).id)">
             <template #title>
               <p class="content" style="margin-left: 20px;">{{ (articleItem as any).content }}</p>
               <div class="btn">
                 <el-button size="small" @click="handleEdit(index, articleItem)"
                   style="background-color: #5ccf5c; color: white;">Edit</el-button>
-                <el-button size="small" @click="handleDelete(index, articleItem)" style="margin-right: 8px;">Delete</el-button>
+                <el-button size="small" @click="handleDelete(index, articleItem)"
+                  style="margin-right: 8px;">Delete</el-button>
               </div>
               <div class="likescomments" style="position: absolute; right: 5vh;"><el-button class="likesbtn"
-                  style="margin-right: 2px;">❤️{{ (articleItem as any).likes_count }} </el-button><el-button class="likesbtn">💬{{ (articleItem as
+                  style="margin-right: 2px;">❤️{{ (articleItem as any).likes_count }} </el-button><el-button
+                  class="likesbtn">💬{{ (articleItem as
                     any).comments_count }}</el-button>
               </div>
 
@@ -95,7 +95,6 @@ interface User {
 
 
 const handleEdit = (index: number, row: User) => {
-  console.log("selected article: ", index, row);
   store.commit("SET_DIALOG", row)
 };
 
@@ -129,9 +128,8 @@ const GetArticle = async () => {
     const response = await axios.get(`http://127.0.0.1:8000/articlelist/user_id/${id}`)
     if (response.status == 200) {
       console.log("get article success")
-      console.log("user's article: ", response.data)
       article.value = response.data
-      console.log(article.value)
+
     }
   } catch (error) {
     console.log(error)
@@ -147,22 +145,18 @@ watch([currentPage4, pageSize4, article], () => {
 
 const Comments = ref([])
 const Switch = ref('')
-console.log(Switch.value)
 const GetComment = async (author: any, article_id: number) => {
   try {
     const response = await axios.get(`http://localhost:8000/commentlist/user_id/${author}/article_id/${article_id}`)
     if (response.status == 200) {
       console.log("get comment success")
-      console.log(response.data)
       Comments.value = response.data
-      console.log(Comments.value)
 
       if (Switch.value == '') {
         Switch.value = `${article_id}`
       } else {
         Switch.value = `${article_id}`
       }
-      console.log('comment show now:', Switch.value)
 
     }
   } catch (error) {
@@ -262,4 +256,5 @@ onMounted(() => {
 
 .body {
   margin-bottom: 50px;
-}</style>
+}
+</style>

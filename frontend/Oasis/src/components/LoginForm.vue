@@ -7,9 +7,11 @@
       <el-input v-model="ruleform.password" placeholder="Enter your password" type="password" />
     </el-form-item>
     <el-form-item>
-      <el-button type="primary" class="submit-btn" @click="submitform">Sign in</el-button>
+      <el-button type="success" class="submit-btn" @click="submitform">Sign in</el-button>
     </el-form-item>
   </el-form>
+
+
 </template>
 
 
@@ -20,8 +22,9 @@ import { ref, reactive } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import axios from 'axios'
 import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
 
-
+const store = useStore()
 
 const ruleFormRef = ref<FormInstance>()
 const router = useRouter();
@@ -52,6 +55,8 @@ watch(ruleform, (newval) => {
   emit('update:ruleform', newval)
 })
 
+let dialogFormVisible= ref('0')
+
 const submitform = async () => {
   try {
     // create a new axios instance
@@ -62,10 +67,8 @@ const submitform = async () => {
 
     const response = await axios.post('http://127.0.0.1:8000/login/', postdata, { withCredentials: true })
     // output the response
-    console.log(response)
     if (response.status == 200) {
       console.log("login success")
-      console.log(response.data['data']['user_id'])
       Userdata.id = response.data['data']['user_id']
       Userdata.name = response.data['data']['name']
       Userdata.account = response.data['data']['account']
@@ -85,11 +88,13 @@ const submitform = async () => {
     }
     else {
       console.log("login failed")
+      store.state.homeview.loginVisible = '1'
     }
   }
   catch (error) {
     console.log("login failed")
     console.log(error)
+    store.state.homeview.loginVisible = '1'
   }
 
 
@@ -115,8 +120,11 @@ form.sign-up-form {
 }
 
 .submit-btn {
-  width: 100%;
-  background-color: rgb(93, 203, 145);
+  background-color: #37bd76;
+}
+
+.submit-btn:hover {
+  background-color: #3cc47b;
 }
 
 .submit-btn:hover {
@@ -145,7 +153,5 @@ form.sign-up-form {
   color: #333;
 }
 
-.tiparea p a {
-  color: #409eff;
-}
+
 </style>

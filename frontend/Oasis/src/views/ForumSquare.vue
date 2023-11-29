@@ -120,14 +120,12 @@ const GetAllArticle = async () => {
   try {
     const response = await axios.get(`http://localhost:8000/articlelist/`)
     if (response.status == 200) {
-      console.log("get article success")
-      console.log(response.data)
+      console.log("get all articles success")
       articlelist.value = response.data.data
       Array(articlelist.value).sort((a:any, b:any) => b.likes_count - a.likes_count);
       for (let i = 0; i < 10; i++) {
         article.value[i] = articlelist.value[i]
       }
-      console.log(article.value)
     }
   } catch (error) {
     console.log(error)

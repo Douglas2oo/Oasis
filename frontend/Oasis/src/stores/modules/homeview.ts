@@ -3,7 +3,9 @@ let homeview: Object = {
     dialogFormVisible: false,
     commentVisible: false,
     uplistData: {},
-    Comment: {}
+    Comment: {},
+    loginVisible: false,
+    registerVisible: false,
   },
   getters: {},
   mutations: {

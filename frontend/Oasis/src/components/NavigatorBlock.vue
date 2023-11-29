@@ -27,8 +27,8 @@
             <div class="demo-type">
                 <div style="padding-bottom: 15px;">
                     
-                    <el-avatar v-if="avatar == 'http://127.0.0.1:8000/media/avatar/default.png'" />
-                    <el-avatar v-else :src="avatar" alt="Avatar" />
+                    <img v-if="avatar == 'http://127.0.0.1:8000/media/avatar/default.png'" src="../assets/images/default.png" alt="User Avatar"/>
+                    <el-avatar v-else :src="avatar" alt="User Avatar" />
                 </div>
 
             </div>
@@ -64,9 +64,6 @@ const path1 = '/ForumSquare?id=' + Userdata.id + '&name=' + Userdata.name + '&ac
 const path2 = '/home?id=' + Userdata.id + '&name=' + Userdata.name + '&account=' + Userdata.name + '&email=' + Userdata.email + '&birthday=' + Userdata.birthday; // 替换为实际的路径
 
 
-onMounted(() => {
-    console.log("router form", router.options.routes)
-})
 
 // 获取路由信息
 
@@ -89,8 +86,6 @@ const response = await axios.post('http://127.0.0.1:8000/avatar/', {
   user_id: Userdata.id
 });
   if (response.status == 200) {
-    console.log("get avatar success")
-    console.log("avatar",response.data.data.avatar)
     avatar.value = response.data.data.avatar
   }
 } catch (error) {

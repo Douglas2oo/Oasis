@@ -1,6 +1,7 @@
 <template>
+            
     <el-form ref="ruleFormRef" label-width="120px" :model="registerForm" :rules="registerrules"
-        class="registerForm sign-up-form">
+        class="registerForm sign-up-form">  
         <el-form-item label="name" prop="name">
             <el-input v-model="registerForm.name" placeholder="Enter your name" type="text" />
         </el-form-item>
@@ -10,7 +11,7 @@
         <el-form-item label="email" prop="email">
             <el-input v-model="registerForm.email" placeholder="Enter your email" type="text" />
         </el-form-item>
-        <el-form-item label="Birthday" prop='birthday'>
+        <el-form-item label="birthday" prop='birthday'>
             <el-col :span="11">
                 <el-date-picker v-model="registerForm.birthday" type="date" placeholder="Pick a date" />
             </el-col>
@@ -25,7 +26,7 @@
             <el-input v-model="registerForm.password2" placeholder="Enter your password again" type="password" />
         </el-form-item>
         <el-form-item>
-            <el-button type="primary" class="submit-btn" @click="registersubmit">Sign up</el-button>
+            <el-button type="success" class="submit-btn" @click="registersubmit">Sign up</el-button>
         </el-form-item>
     </el-form>
 </template>
@@ -36,7 +37,9 @@ import { ref, reactive } from 'vue'
 import { dateEquals, type FormInstance, type FormRules } from 'element-plus'
 import { useRouter } from 'vue-router';
 import axios from 'axios'
+import { useStore } from 'vuex';
 
+const store = useStore()
 
 const emit = defineEmits(['update:registerForm'])
 const router = useRouter()
@@ -88,12 +91,10 @@ const registersubmit = async () => {
         password2: registerForm.password2,
     }
     try {
-        console.log(postdata)
         const response = await axios.post('http://localhost:8000/register/', postdata, { withCredentials: true })
         console.log("status", response.data)
         if (response.data.success) {
             console.log("register success")
-            console.log(response.data)
             Userdata.id = response.data['data']['user_id']
             Userdata.name = response.data['data']['name']
             Userdata.account = response.data['data']['account']
@@ -112,9 +113,11 @@ const registersubmit = async () => {
         }
         else {
             console.log("register failed")
+            store.state.homeview.registerVisible='1'
         }
     } catch (error) {
-        console.log("register failed !!!!!")
+        console.log("register failed")
+        store.state.homeview.registerVisible='1'
         console.log(error)
     }
 }
@@ -153,4 +156,5 @@ const registersubmit = async () => {
   }
     
 
-<style scoped></style>
+<style scoped>
+</style>

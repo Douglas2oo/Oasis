@@ -5,7 +5,7 @@
         <div style="margin: 15px; text-align: center">
           <el-upload name="file" ref="upload" class="avatar-uploader" accept=".png,.jpg,.jpeg"
             :http-request="handleAvatarSuccess" :show-file-list="false">
-            <el-avatar v-if="avatar == 'http://127.0.0.1:8000/media/avatar/default.png'"  class="avatar" />
+            <img v-if="avatar == 'http://127.0.0.1:8000/media/avatar/default.png'" src="../assets/images/default.png"  class="avatar" />
               <el-avatar v-else class="el-icon-plus avatar-uploader-icon" :src="avatar"/>
             
           </el-upload>
@@ -47,7 +47,7 @@ const Userdata = reactive({
 
 // 处理头像上传成功
 const handleAvatarSuccess = (response) => {
-  console.log('File uploaded successfully!');
+  console.log('Avatar uploaded successfully!');
   // 处理头像上传成功
   console.log('avatar', response.file);
    // 假设后端返回的头像 URL 存在 response.url 中
@@ -75,6 +75,10 @@ const uploadToBackend = (avatarFile) => {
       console.error('Error uploading to backend:', error);
       // 处理上传到后端的错误
     });
+    GetAvatar()
+    window.location.reload()
+
+    
 };
 
 
@@ -87,7 +91,6 @@ const GetAvatar = async () => {
     });
     if (response.status == 200) {
       console.log("get avatar success")
-      console.log(response.data.data.avatar)
       avatar.value = response.data.data.avatar
     }
   } catch (error) {
@@ -109,12 +112,11 @@ const user = reactive({
 // 向后端发起请求
 axios.get('http://localhost:8000/login/')
   .then(response => {
-    console.log('userdata', response.data);
     const targetUser = response.data.find(user => user.user_id === Userdata.id);
 
     if (targetUser) {
       // 在这里处理找到的目标用户数据
-      console.log('Target user found:', targetUser);
+      console.log('Target user found');
 
     } else {
       console.log('Target user not found');
