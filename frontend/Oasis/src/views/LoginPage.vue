@@ -1,12 +1,11 @@
 <template>
-    
   <div class="container" :class="{ 'sign-up-mode': signUpMode }">
     <div class="forms-container">
       <Background />
       <div class="signin-signup">
         <LoginForm :ruleform="ruleform" :rules="rules" />
         <RegisterForm :registerrules="registerrules" :registerForm="registerForm" />
-        
+
       </div>
     </div>
 
@@ -30,13 +29,13 @@
   </div>
   <el-dialog class="BOX" v-model="store.state.homeview.loginVisible" title="Login failed." style="border-radius: 2vh;">
     <span>Invalid account or password!</span>
-   
+
   </el-dialog>
-  <el-dialog class="BOX" v-model="store.state.homeview.registerVisible" title="Register failed." style="border-radius: 2vh;">
+  <el-dialog class="BOX" v-model="store.state.homeview.registerVisible" title="Register failed."
+    style="border-radius: 2vh;">
     <span>Please verify the entered information for accuracy.</span>
-   
+
   </el-dialog>
-  
 </template>
 
 
@@ -51,12 +50,12 @@ import { useStore } from 'vuex'
 
 const store = useStore()
 
-// 校验规则
+// Verification rules
 const ruleFormRef = ref<FormInstance>()
 const signUpMode = ref(false)
 
 
-// login
+// login rules
 const ruleform = ref({
   account: '',
   password: ''
@@ -87,7 +86,7 @@ const rules: FormRules = {
 }
 
 
-// register
+// password verification
 
 const validatorpass = (rule: any, value: any, callback: any) => {
   if (value === '') {
@@ -238,7 +237,7 @@ const registerrules: FormRules = {
   top: -10%;
   right: 48%;
   transform: translateY(-50%);
-  background-image: linear-gradient(-30deg, rgb(93, 203, 145,0.6) 0%, #7de0ab 100%);
+  background-image: linear-gradient(-30deg, rgb(93, 203, 145, 0.6) 0%, #7de0ab 100%);
   transition: 1.8s ease-in-out;
   border-radius: 50%;
   z-index: 6;

@@ -1,7 +1,6 @@
 <template>
-            
     <el-form ref="ruleFormRef" label-width="120px" :model="registerForm" :rules="registerrules"
-        class="registerForm sign-up-form">  
+        class="registerForm sign-up-form">
         <el-form-item label="name" prop="name">
             <el-input v-model="registerForm.name" placeholder="Enter your name" type="text" />
         </el-form-item>
@@ -70,6 +69,10 @@ watch(registerForm, (newValue) => {
     emit('update:registerForm', newValue)
 })
 
+
+/*
+change the date format
+*/
 const changedate = (birthdaydate) => {
     const birthdate = new Date(birthdaydate)
     const year = birthdate.getFullYear()
@@ -113,11 +116,11 @@ const registersubmit = async () => {
         }
         else {
             console.log("register failed")
-            store.state.homeview.registerVisible='1'
+            store.state.homeview.registerVisible = '1'
         }
     } catch (error) {
         console.log("register failed")
-        store.state.homeview.registerVisible='1'
+        store.state.homeview.registerVisible = '1'
         console.log(error)
     }
 }
@@ -156,5 +159,4 @@ const registersubmit = async () => {
   }
     
 
-<style scoped>
-</style>
+<style scoped></style>

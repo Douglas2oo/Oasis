@@ -1,6 +1,12 @@
 from rest_framework import serializers
 from .models import User, Article, Comment
 
+
+"""
+Serializer is used to serialize and deserialize data for individual models,
+and is used to convert the data into a format that can be easily rendered to JSON
+"""
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User

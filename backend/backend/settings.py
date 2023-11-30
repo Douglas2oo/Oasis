@@ -146,7 +146,7 @@ CORS_ALLOW_HEADERS = [
     "Access-Control-Allow-Headers"
 ]
 
-CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_CREDENTIALS = True # allow cookies to be included in requests
 
 
 

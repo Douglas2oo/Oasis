@@ -2,7 +2,7 @@ from . import views
 from django.shortcuts import render
 from django.views.static import serve
 from django.conf import settings
-from django.urls import path,re_path,include
+from django.urls import path,re_path
 
 
 
@@ -26,5 +26,5 @@ urlpatterns = [
     path('avatar/', views.Avatar.as_view(), name='avatar'),
     re_path(r'^media/(?P<path>.*)$',serve,{
         'document_root':settings.MEDIA_ROOT
-    })
+    }) # serve the media files
 ]

@@ -10,8 +10,6 @@
       <el-button type="success" class="submit-btn" @click="submitform">Sign in</el-button>
     </el-form-item>
   </el-form>
-
-
 </template>
 
 
@@ -28,7 +26,7 @@ const store = useStore()
 
 const ruleFormRef = ref<FormInstance>()
 const router = useRouter();
-const emit = defineEmits(['update:ruleform'])
+const emit = defineEmits(['update:ruleform']) // ruleform for updating parent components
 
 const { rules, ruleform } =
   defineProps({
@@ -55,7 +53,7 @@ watch(ruleform, (newval) => {
   emit('update:ruleform', newval)
 })
 
-let dialogFormVisible= ref('0')
+let dialogFormVisible = ref('0')
 
 const submitform = async () => {
   try {
@@ -103,7 +101,7 @@ const submitform = async () => {
 </script>
 
 <style>
-/* 控制login & register显示 */
+/* Control login & register display */
 form {
   padding: 0rem 5rem;
   transition: all 0.2s 0.7s;
@@ -152,6 +150,4 @@ form.sign-up-form {
   font-size: 12px;
   color: #333;
 }
-
-
 </style>
