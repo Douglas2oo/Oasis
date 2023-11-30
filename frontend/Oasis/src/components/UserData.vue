@@ -75,8 +75,8 @@ const uploadToBackend = (avatarFile) => {
       console.error('Error uploading to backend:', error);
       // 处理上传到后端的错误
     });
-    GetAvatar()
-    window.location.reload()
+    GetAvatar1()
+
 
     
 };
@@ -92,6 +92,21 @@ const GetAvatar = async () => {
     if (response.status == 200) {
       console.log("get avatar success")
       avatar.value = response.data.data.avatar
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const GetAvatar1 = async () => {
+  try {
+    const response = await axios.post('http://127.0.0.1:8000/avatar/', {
+      user_id: Userdata.id
+    });
+    if (response.status == 200) {
+      console.log("get avatar success")
+      avatar.value = response.data.data.avatar
+      window.location.reload()
     }
   } catch (error) {
     console.log(error)
