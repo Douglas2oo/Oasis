@@ -127,36 +127,5 @@ const registersubmit = async () => {
 
 
 </script>
-.registerForm {
-    margin-top: 20px;
-    background-color: #fff;
-    padding: 20px 40px 20px 20px;
-    border-radius: 5px;
-    box-shadow: 0px 5px 10px #cccc;
-  }
-
-  form {
-    padding: 0rem 5rem;
-    transition: all 0.2s 0.7s;
-    overflow: hidden;
-  }
-  
-  form.sign-in-form {
-    z-index: 2;
-  }
-  
-  form.sign-up-form {
-    opacity: 0;
-    z-index: 1;
-  }
-  
-.text-center {
-    text-align: center;
-  }
-  
-.text-gray-500 {
-    color: #a0aec0;
-  }
-    
 
 <style scoped></style>

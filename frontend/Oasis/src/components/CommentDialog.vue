@@ -2,7 +2,6 @@
   <el-dialog class="BOX" v-model="store.state.homeview.commentVisible" title="Write your comment!">
     <el-form :model="form" :label-width="formLabelWidth">
 
-
       <el-form-item label="content" :label-width="formLabelWidth">
         <el-input v-model="form.content" autocomplete="off" type="textarea" style="margin-right: 80px;" />
       </el-form-item>
@@ -18,13 +17,13 @@
 </template>
   
 <script setup lang="ts">
-import { reactive, ref, watchEffect } from 'vue'
+import { reactive } from 'vue'
 import { useStore } from 'vuex';
 import { useRouter } from "vue-router"
 import axios from 'axios'
 
-
 const router = useRouter();
+
 const Userdata = reactive({
   id: router.currentRoute.value.query.id,
 })
@@ -35,18 +34,15 @@ const form = reactive({
 
 let store = useStore()
 
-
-
+//Confirm or cancel based on the input number
 let closeDialog = (num: number) => {
 
   if (num == 1) {
-    console.log(form.content) //要发表什么评论
 
     let data = {
       article_id: store.state.homeview.Comment.id,
       comment: form.content,
       user_id: Userdata.id,
-
     }
 
     axios.post('http://localhost:8000/comment/', data, { withCredentials: true })
@@ -63,9 +59,8 @@ let closeDialog = (num: number) => {
 
 }
 
-
+// the width of the label
 const formLabelWidth = '140px'
-
 
 </script>
   
@@ -78,9 +73,6 @@ const formLabelWidth = '140px'
   width: 300px;
 }
 
-/* .el-input {
-    width: 300px;
-  } */
 .dialog-footer button:first-child {
   margin-right: 10px;
 }

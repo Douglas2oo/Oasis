@@ -168,7 +168,7 @@ const registerrules: FormRules = {
   z-index: 5;
 }
 
-/* 左右切换动画 */
+/* Left-right toggle animation */
 .social-text {
   padding: 0.7rem 0;
   font-size: 1rem;
@@ -228,7 +228,7 @@ const registerrules: FormRules = {
   grid-template-columns: repeat(2, 1fr);
 }
 
-/* 大板块 */
+/* Big Block */
 .container:before {
   content: "";
   position: absolute;
@@ -447,7 +447,7 @@ const registerrules: FormRules = {
 
 /* register */
 
-/* 控制login & register显示 */
+/* Control the display of login & register */
 form {
   padding: 0rem 5rem;
   transition: all 0.2s 0.7s;

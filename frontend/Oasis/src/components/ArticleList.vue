@@ -1,8 +1,6 @@
 <template>
   <div style=" margin-top: 10px;">
-
     <div class="articlebox" style="background-color: white;">
-
       <div class="flex-container ">
         <el-collapse v-model="activeName" accordion style="width:100%; ">
           <el-collapse-item v-for="(articleItem, index) in activeArticles" class="comment" style="width:100%;margin-right:-10px; margin-bottom: 15px;position: relative; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -20,7 +18,6 @@
                   class="likesbtn">💬{{ (articleItem as
                     any).comments_count }}</el-button>
               </div>
-
             </template>
             <p class="content" v-if="Switch == (articleItem as any).id" v-for="(comment, index) in (Comments as any).data"
               :key="`${comment.id}-${index}`" style="min-width: 100%;margin-bottom: 20px;"> Comment {{ index + 1 }}:
@@ -28,27 +25,16 @@
               {{ comment.comment }}
             </div>
             </p>
-
           </el-collapse-item>
         </el-collapse>
-
-
-
-
       </div>
-
     </div>
-
-
-
-    <!-- 设置导航 -->
-    <!-- 修改下面得属性 -->
+    <!-- Set up navigation -->
+    <!-- Pagination functionality -->
     <el-pagination layout="total, sizes, prev, pager, next, jumper" :current-page="currentPage4" :total="article.length"
       @size-change="handleSizeChange" @current-change="handleCurrentChange" />
-
-    <!-- 修改的弹出框 -->
+    <!-- Modal dialog -->
     <Ud />
-
   </div>
 </template>
 
@@ -64,35 +50,28 @@ let store = useStore()
 
 let activeName = ref(['1'])
 
-// 设置需要的参数与方法
+// Configure pagination parameters
 const currentPage4 = ref(1)
 const pageSize4 = ref(10)
 
+// set up the active articles
+const activeArticles = ref([]);
 
-const activeArticles = ref([]); // 添加这行代码
-
-
-
-// 修改下面得方法
+// Set up pagination functionality
 const handleSizeChange = (val: number) => {
-  //一页显示多少条
-
+  //The number of items displayed per page
   pageSize4.value = val;
 }
-const handleCurrentChange = (val: number) => {
-  //页码更改方法
 
+const handleCurrentChange = (val: number) => {
+  //Pagination control method
   currentPage4.value = val;
 }
 
-// 添加删除和修改按钮方法与接口
+// Methods and interfaces for deleting, and modifying button
 interface User {
-  date: string;
   name: string;
-  address: string;
 }
-
-
 
 const handleEdit = (index: number, row: User) => {
   store.commit("SET_DIALOG", row)
@@ -104,8 +83,11 @@ const handleDelete = (index: number, row: any) => {
   axios.delete(`http://localhost:8000/article/`, { data: { article_id: row.id }, withCredentials: true },)
   window.location.reload()
 };
+
 const article = ref([])
 const router = useRouter();
+
+//Retrieve basic user data
 const Userdata = reactive({
   id: router.currentRoute.value.query.id,
   name: router.currentRoute.value.query.name,
@@ -122,6 +104,7 @@ watch(router.currentRoute, (to, from) => {
   Userdata.birthday = to.query.birthday
 })
 
+//get article
 const GetArticle = async () => {
   try {
     const id = Userdata.id//拿到user_id
@@ -145,6 +128,8 @@ watch([currentPage4, pageSize4, article], () => {
 
 const Comments = ref([])
 const Switch = ref('')
+
+//get comment
 const GetComment = async (author: any, article_id: number) => {
   try {
     const response = await axios.get(`http://localhost:8000/commentlist/user_id/${author}/article_id/${article_id}`)
@@ -164,15 +149,12 @@ const GetComment = async (author: any, article_id: number) => {
   }
 }
 
-
 onMounted(() => {
   GetArticle()
 
 })
 
-
 </script>
-
 
 <style>
 .likesbtn {
@@ -222,10 +204,6 @@ onMounted(() => {
 
 .el-row {
   margin-bottom: 20px;
-
-  &:last-child {
-    margin-bottom: 0;
-  }
 }
 
 .el-col {

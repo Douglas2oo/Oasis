@@ -1,30 +1,23 @@
 <template>
     <div class="common-layout" style="background: linear-gradient(to top, rgb(91, 194, 91),white);">
-
+        
+        <!-- Naviagation -->
         <Na />
 
         <el-main>
             <router-view />
         </el-main>
 
-
-
     </div>
 </template>
     
 <script setup lang="ts">
-import { reactive, toRefs, watch, onMounted, ref } from 'vue'
-import axios from 'axios'
+import { reactive, watch } from 'vue'
 import { useRouter } from 'vue-router';
-
-
-import { UserFilled } from '@element-plus/icons-vue'
-const alist = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-
-
-const articlelist = ref([])
+import Na from '../components/NavigatorBlock.vue'
 
 const router = useRouter();
+
 const Userdata = reactive({
     id: router.currentRoute.value.query.id,
     name: router.currentRoute.value.query.name,
@@ -40,12 +33,6 @@ watch(router.currentRoute, (to, from) => {
     Userdata.email = to.query.email
     Userdata.birthday = to.query.birthday
 })
-
-
-
-
-
-import Na from '../components/NavigatorBlock.vue'
 
 
 </script>
@@ -73,7 +60,6 @@ h1 {
     margin-bottom: 20px;
 }
 
-/* 高度100% */
 .el-container,
 .common-layout,
 #app,
@@ -81,5 +67,6 @@ body,
 html {
     height: 100%;
 }
+
 </style>
     
