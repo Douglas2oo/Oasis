@@ -1,26 +1,18 @@
 <template>
-  <div class="common-layout" >
+  <div class="common-layout">
 
-
-   
-
-
-      <el-header class="head">
-        <h1>Your Home</h1>
-      </el-header>
-      <el-main>
-        <div>
-          <PersonalData style="margin-top: 50px;" />
-        </div>
-        <h2>Your Articles</h2>
-        <ArticleList />
-        <!-- Fixed bar at the bottom -->
-        <FixedBar />
-      </el-main>
-
-
-
-    
+    <el-header class="head">
+      <h1>Your Home</h1>
+    </el-header>
+    <el-main>
+      <div>
+        <PersonalData style="margin-top: 50px;" />
+      </div>
+      <h2>Your Articles</h2>
+      <ArticleList />
+      <!-- Fixed bar at the bottom -->
+      <FixedBar />
+    </el-main>
 
   </div>
 </template>
@@ -29,7 +21,6 @@
 import PersonalData from '../components/UserData.vue'
 import ArticleList from '../components/ArticleList.vue'
 import FixedBar from '../components/FixedBar.vue'
-
 
 </script>
   
@@ -91,7 +82,6 @@ h2 {
   align-items: center;
 }
 
-/* 高度100% */
 .el-container,
 .common-layout,
 #app,

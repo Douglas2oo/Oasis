@@ -2,25 +2,23 @@
   <div class="vanta_area" ref="Area"></div>
 </template>
 <script setup>
-//导入vanta.js和three.js，以及ref等hooks
 import * as THREE from 'three'
 import GLOBE from 'vanta/src/vanta.globe'
 import {onMounted,onBeforeUnmount,ref} from 'vue'
 
-//使用ref引用挂载区域
+//Mounting area using ref reference
 const Area=ref(null)
-//创建一个全局的变量来使用vanta.js
+
 /**
-*因为在vue2中，是使用this.vantaEffect来创建指定的3d动画模板的
-*但是vue3 setup中是没有this，所以要另外创建一个
+In Vue 2, we used this.vantaEffect to create a specified 3D animation template. However, in Vue 3 setup, there is no 'this,' so a separate one needs to be created.
 **/
+
 let vantaEffect=null;
-//在两个生命周期钩子内创建vantaEffect
+
 onMounted(()=>{
   vantaEffect=GLOBE({
       el:Area.value,
       THREE:THREE,
-      //如果需要改变样式，要写在这里
       mouseControls: true,
       touchControls: true,
       gyroControls: false,
@@ -31,8 +29,6 @@ onMounted(()=>{
       color: 0x7de0ab,
       size: 1.30,
       backgroundColor: 0xffffff
-      //因为这里vantaEffect是没有setOptions这个方法的
-
   })
 })
 
@@ -42,6 +38,7 @@ onBeforeUnmount(()=>{
   }
 })
 </script>
+
 <style  scoped>
 .vanta_area {
 width:100vw;

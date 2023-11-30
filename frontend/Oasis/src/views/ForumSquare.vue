@@ -18,18 +18,17 @@
         style="border-radius: 60px; width: 90%; margin-bottom: 50px;">
         <el-carousel-item v-for="articleItem in article" :key="articleItem" style="border-radius: 10px;">
 
-          <!-- 幻灯片内容是在item 里面显示 -->
           <h3 class="small justify-center" text="2xl">
 
             <div class="articlebox">
-              <p class="content" style="line-height: 1.2; margin-top: 100px; font-size: 55px;" >{{ (articleItem as
+              <p class="content" style="line-height: 1.2; margin-top: 100px; font-size: 55px;">{{ (articleItem as
                 any).content }}</p>
               <div class="flex-container">
                 <div class="likescomments">
                   <el-button @click="AddLikes((articleItem as any).id, articleItem)" class="likesbtn"
                     :disabled="(articleItem as any).isLiked" style="font-size: 1.8em; margin-right: 8px;">
                     ❤️{{ (articleItem as any).likes_count }}</el-button>
-                  
+
                   <el-button @click="() => handleEdit((articleItem as any).id, articleItem)" class="likesbtn"
                     style="font-size: 1.8em;">💬 {{ (articleItem as any).comments_count }} </el-button>
                 </div>
@@ -39,6 +38,7 @@
           </h3>
         </el-carousel-item>
       </el-carousel>
+      <!-- Comment editing box -->
       <CommentDia />
     </div>
   </div>
@@ -56,7 +56,7 @@ import Welcome from '../assets/Animation/Welcome.json'
 import Lottie from 'lottie-web';
 import lottie from "./Lottie.vue";
 
-// Animation1
+// HandingShaking Animation
 const heartOptions = {
   animationData: Animation1,
   loop: true,
@@ -102,18 +102,15 @@ const Wnext = () => {
   (w as any)?.play();
 };
 
-
-
-// 在 mounted 钩子中触发动画的播放
+// Trigger the playback of the animation
 onMounted(() => {
   (heartanim as any)?.play();
   (w as any)?.play();
 });
 
-
 let store = useStore()
 
-// 拿到所有文章的数据,进行整理并且加到列表里面
+// Retrieve data for all articles, organize it, and add it to the list
 const articlelist = ref({})
 const article = ref({})
 const GetAllArticle = async () => {
@@ -122,7 +119,7 @@ const GetAllArticle = async () => {
     if (response.status == 200) {
       console.log("get all articles success")
       articlelist.value = response.data.data
-      Array(articlelist.value).sort((a:any, b:any) => b.likes_count - a.likes_count);
+      Array(articlelist.value).sort((a: any, b: any) => b.likes_count - a.likes_count);
       for (let i = 0; i < 10; i++) {
         article.value[i] = articlelist.value[i]
       }
@@ -132,14 +129,11 @@ const GetAllArticle = async () => {
   }
 }
 
-
-
 onMounted(() => {
   GetAllArticle()
 })
 
-
-
+// Edit comment 
 const handleEdit = (index: number, row: any) => {
   console.log("selected article: ", index, row);
   store.commit("OPEN_DIA", row)
@@ -150,7 +144,7 @@ const Userdata = reactive({
   id: router.currentRoute.value.query.id,
 })
 
-
+// Add likes
 const AddLikes = (index, row) => {
   row.isLiked = true
   try {
@@ -169,8 +163,6 @@ const AddLikes = (index, row) => {
     console.log(error)
   }
 }
-
-
 
 </script>
   
@@ -194,7 +186,6 @@ const AddLikes = (index, row) => {
   margin-bottom: -10px;
 }
 
-
 .content {
   font-size: 30px;
   font-family: 'Nunito', sans-serif;
@@ -216,7 +207,6 @@ const AddLikes = (index, row) => {
   padding: 15px;
   position: relative;
 }
-
 
 #home {
   text-align: center;
@@ -261,7 +251,6 @@ h1 {
 
 }
 
-/* 高度100% */
 .el-container,
 .common-layout,
 #app,
@@ -271,7 +260,6 @@ html {
 
 }
 
-
 .el-col {
   border-radius: 4px;
 }
@@ -280,7 +268,6 @@ html {
   border-radius: 4px;
   min-height: 36px;
 }
-
 
 .demo-basic {
   text-align: center;
@@ -326,7 +313,7 @@ html {
 }
 
 .el-carousel__item:nth-child(2n + 1) {
-  background: linear-gradient(to top, #6cc36c, rgb(199, 102, 199));
+  background: linear-gradient(to top, #6cc36c, rgb(198, 115, 198));
 }
 
 
@@ -343,5 +330,6 @@ html {
 
 .demo-type>div:not(:last-child) {
   border-right: 1px solid var(--el-border-color);
-}</style>
+}
+</style>
     

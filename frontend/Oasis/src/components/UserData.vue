@@ -5,9 +5,10 @@
         <div style="margin: 15px; text-align: center">
           <el-upload name="file" ref="upload" class="avatar-uploader" accept=".png,.jpg,.jpeg"
             :http-request="handleAvatarSuccess" :show-file-list="false">
-            <img v-if="avatar == 'http://127.0.0.1:8000/media/avatar/default.png'" src="../assets/images/default.png"  class="avatar" />
-              <el-avatar v-else class="el-icon-plus avatar-uploader-icon" :src="avatar"/>
-            
+            <img v-if="avatar == 'http://127.0.0.1:8000/media/avatar/default.png'" src="../assets/images/default.png"
+              class="avatar" />
+            <el-avatar v-else class="el-icon-plus avatar-uploader-icon" :src="avatar" />
+
           </el-upload>
 
 
@@ -45,19 +46,18 @@ const Userdata = reactive({
 
 
 
-// 处理头像上传成功
+// Handle successful avatar upload
 const handleAvatarSuccess = (response) => {
   console.log('Avatar uploaded successfully!');
-  // 处理头像上传成功
   console.log('avatar', response.file);
-   // 假设后端返回的头像 URL 存在 response.url 中
-  uploadToBackend(response.file); // 调用上传到后端的函数
+  //upload the avatar file to backend
+  uploadToBackend(response.file);
 };
 
 
 const uploadToBackend = (avatarFile) => {
-  
-  // 将头像上传到后端
+
+  // upload the avatar file to backend
   axios.put('http://localhost:8000/avatar/', {
     user_id: Userdata.id,
     avatar: avatarFile,
@@ -68,22 +68,19 @@ const uploadToBackend = (avatarFile) => {
   })
     .then(response => {
       console.log('Backend response:', response);
-      // 可以在这里处理后端的其他响应
       console.log('avatar', avatarFile);
     })
     .catch(error => {
       console.error('Error uploading to backend:', error);
-      // 处理上传到后端的错误
     });
-    GetAvatar1()
+  GetAvatar1();
 
-
-    
 };
 
 
 let avatar = ref('')
 
+//Initial avatar retrieval function
 const GetAvatar = async () => {
   try {
     const response = await axios.post('http://127.0.0.1:8000/avatar/', {
@@ -98,6 +95,7 @@ const GetAvatar = async () => {
   }
 }
 
+//The retrieval function after changing the avatar
 const GetAvatar1 = async () => {
   try {
     const response = await axios.post('http://127.0.0.1:8000/avatar/', {
@@ -117,31 +115,31 @@ onMounted(() => {
   GetAvatar();
 })
 
-
-
+// User data
 const user = reactive({
   name: "",
   email: "",
 });
 
-// 向后端发起请求
 axios.get('http://localhost:8000/login/')
   .then(response => {
     const targetUser = response.data.find(user => user.user_id === Userdata.id);
 
     if (targetUser) {
-      // 在这里处理找到的目标用户数据
+      // Handle the found target user data here
       console.log('Target user found');
 
     } else {
       console.log('Target user not found');
     }
-    // 获取到后端返回的数据
+
+    // data get from backend
     const name = targetUser.name;
     const email = targetUser.email;
     const birthday = targetUser.birthday;
     const account = targetUser.account;
-    // 将数据存储在localStorage中
+
+    // Store the data in localStorage
     localStorage.setItem('name', JSON.stringify(name))
     localStorage.setItem('email', JSON.stringify(email))
     localStorage.setItem('birthday', JSON.stringify(birthday))
@@ -150,10 +148,9 @@ axios.get('http://localhost:8000/login/')
   })
   .catch(error => {
     console.error('Error fetching data:', error);
-    // 处理请求错误
   });
 
-// 从localStorage中获取数据
+// retrieve data from localStorage
 const nameString = localStorage.getItem('name');
 const name = nameString.replace(/^"|"$/g, '');
 user.name = name
@@ -187,13 +184,11 @@ body {
   justify-content: center;
 }
 
-
 .biginput {
   width: 100%;
 
   margin-top: 10px;
 }
-
 
 .el-button {
   text-align: center;
@@ -230,8 +225,6 @@ body {
   min-height: 500vh;
   min-height: 30vh;
   border-radius: 20px;
-
-
 }
 
 .el-form-item__label {
