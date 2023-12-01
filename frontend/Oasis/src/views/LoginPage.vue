@@ -12,7 +12,7 @@
     <div class="panels-container">
       <div class="panel left-panel">
         <div class="content">
-          <h3>Life is a journey</h3>
+          <h3>Believe you can and you're halfway there.</h3>
           <button @click="signUpMode = !signUpMode" class="btn transparent">Sign up</button>
         </div>
         <img src="@/assets/images/circlelogo.png" class="image" alt="" />
@@ -20,7 +20,7 @@
 
       <div class="panel right-panel">
         <div class="content">
-          <h3>Feel the world</h3>
+          <h3>Life is a journey.</h3>
           <button @click="signUpMode = !signUpMode" class="btn transparent">Sign in</button>
         </div>
         <img src="@/assets/images/circlelogo.png" class="image" alt="" />
@@ -237,7 +237,7 @@ const registerrules: FormRules = {
   top: -10%;
   right: 48%;
   transform: translateY(-50%);
-  background-image: linear-gradient(-30deg, rgb(93, 203, 145, 0.6) 0%, #7de0ab 100%);
+  background-image: linear-gradient(-30deg, rgba(52, 183, 113, 0.6) 0%, #3ec47c 100%);
   transition: 1.8s ease-in-out;
   border-radius: 50%;
   z-index: 6;
