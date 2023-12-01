@@ -171,35 +171,35 @@ const user = reactive({
 });
 
 const GetUserData = async () => {
-    axios.get('http://localhost:8000/login/')
-  .then(response => {
-    const targetUser = response.data.find(user => user.user_id === Userdata.id);
+  axios.get('http://localhost:8000/login/')
+    .then(response => {
+      const targetUser = response.data.find(user => user.user_id === Userdata.id);
 
-    if (targetUser) {
-      // Handle the found target user data here
-      console.log('Target user found');
+      if (targetUser) {
+        // Handle the found target user data here
+        console.log('Target user found');
 
-    } else {
-      console.log('Target user not found');
-    }
+      } else {
+        console.log('Target user not found');
+      }
 
-    // data get from backend
-    const name = targetUser.name;
-    const email = targetUser.email;
-    const birthday = targetUser.birthday;
-    const account = targetUser.account;
+      // data get from backend
+      const name = targetUser.name;
+      const email = targetUser.email;
+      const birthday = targetUser.birthday;
+      const account = targetUser.account;
 
-    // Store the data in localStorage
-    localStorage.setItem('name', JSON.stringify(name))
-    localStorage.setItem('email', JSON.stringify(email))
-    localStorage.setItem('birthday', JSON.stringify(birthday))
-    localStorage.setItem('account', JSON.stringify(account))
+      // Store the data in localStorage
+      localStorage.setItem('name', JSON.stringify(name))
+      localStorage.setItem('email', JSON.stringify(email))
+      localStorage.setItem('birthday', JSON.stringify(birthday))
+      localStorage.setItem('account', JSON.stringify(account))
 
-  })
-  .catch(error => {
-    console.error('Error fetching data:', error);
-  });
-  }
+    })
+    .catch(error => {
+      console.error('Error fetching data:', error);
+    });
+}
 
 onMounted(() => {
   GetUserData();

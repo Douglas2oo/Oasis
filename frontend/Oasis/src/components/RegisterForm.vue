@@ -21,7 +21,7 @@
         <el-form-item label="password" prop="password">
             <el-input v-model="registerForm.password" placeholder="Enter your password" type="password" />
         </el-form-item>
-        <el-form-item label="password2" prop="password2">
+        <el-form-item label="password" prop="password2">
             <el-input v-model="registerForm.password2" placeholder="Enter your password again" type="password" />
         </el-form-item>
         <el-form-item>

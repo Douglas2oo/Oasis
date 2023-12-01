@@ -30,22 +30,24 @@ This Oasis Forum is used as a spiritual healing forum, by posting some heart-war
 
 
 
-### How to start the frontend server of `Vue3`
+
+
+### Run the backend server of `Django`
+* create a virtual environment and switch to backend folder.
+* Install the django using `pip install django` first.
+* Run the command `pip install -r requirements.txt` to install the dependencies.
+* Go to the __backend__ folder.
+* Migrate the database using `python manage.py makemigrations` firstly and then using `python manage.py migrate`.
+
+* Using `python manage.py runserver` to start the backend server of `Django`.
+
+
+### Start the frontend server of `Vue3`
  * You should install the `node` first.
  * go to the __Oasis__ folder.
  * use `npm install` to install the dependencies.
  * use `npm run dev` to start the frontend server of `Vue3`.
-
-
-
-### How to run the backend server of `Django`
-* You should install the django using `pip install django` first.
-* go to the __backend__ folder.
-* migrate the database using `python manage.py makemigrations` firstly and then using `python manage.py migrate`.
-
-* use `python manage.py runserver` to start the backend server of `Django`.
-
-
+ * Now you can click on its __url__ to enter our website.
 
 
 
