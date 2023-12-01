@@ -95,7 +95,6 @@ const registersubmit = async () => {
     }
     try {
         const response = await axios.post('http://localhost:8000/register/', postdata, { withCredentials: true })
-        console.log("status", response.data)
         if (response.data.success) {
             console.log("register success")
             Userdata.id = response.data['data']['user_id']
