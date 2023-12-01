@@ -8,7 +8,7 @@
             <img v-if="avatar == 'http://127.0.0.1:8000/media/avatar/default.png'" src="../assets/images/default.png"
               class="avatar" />
             <el-avatar v-else class="el-icon-plus avatar-uploader-icon" :src="avatar" />
-
+            <span class="hint" style="position: absolute; bottom: -42px; ">Click here to upload your avatar!</span>
           </el-upload>
 
 
@@ -111,9 +111,6 @@ const GetAvatar1 = async () => {
   }
 }
 
-onMounted(() => {
-  GetAvatar();
-})
 
 // User data
 const user = reactive({
@@ -121,7 +118,8 @@ const user = reactive({
   email: "",
 });
 
-axios.get('http://localhost:8000/login/')
+const GetUserData = async () => {
+    axios.get('http://localhost:8000/login/')
   .then(response => {
     const targetUser = response.data.find(user => user.user_id === Userdata.id);
 
@@ -149,6 +147,8 @@ axios.get('http://localhost:8000/login/')
   .catch(error => {
     console.error('Error fetching data:', error);
   });
+  }
+
 
 // retrieve data from localStorage
 const nameString = localStorage.getItem('name');
@@ -167,10 +167,27 @@ const accountString = localStorage.getItem('account');
 const account = accountString.replace(/^"|"$/g, '');
 user.account = account
 
+onMounted(() => {
+  GetAvatar();
+  GetUserData();
+})
+
 </script>
 
   
 <style scoped>
+
+.hint:hover {
+  color: rgb(44, 182, 60);
+  cursor: pointer;
+  
+}
+
+.hint {
+  font-weight: bold;
+  font-size: 15px;
+}
+
 body {
   display: flex;
   justify-content: center;
@@ -217,7 +234,7 @@ body {
 .avatar-uploader {
   position: absolute;
   left: 20vh;
-  top: 7vh
+  top: 5vh
 }
 
 .box {
