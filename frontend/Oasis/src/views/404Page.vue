@@ -1,7 +1,7 @@
 <template>
     <div class="not-found">
-        <h1 class = "text">404 not found</h1>
-        <img src = "@/assets/images/404.jpg" alt = "404 not found">
+        <h1 class="text">404 not found</h1>
+        <img src="@/assets/images/404.jpg" alt="404 not found">
     </div>
 </template>
 
@@ -11,7 +11,6 @@
 </script>
 
 <style scoped>
-
 .not-found {
     height: 100vh;
     overflow: hidden;
@@ -34,5 +33,4 @@
     color: #f80606;
     margin-bottom: 2rem;
 }
-
 </style>

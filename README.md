@@ -30,12 +30,6 @@ This Oasis Forum is used as a spiritual healing forum, by posting some heart-war
 
 
 
-### Start the frontend server of `Vue3`
- * You should install the `node` first.
- * go to the __Oasis__ folder.
- * use `npm install` to install the dependencies.
- * use `npm run dev` to start the frontend server of `Vue3`.
-
 
 
 ### Run the backend server of `Django`
@@ -48,6 +42,12 @@ This Oasis Forum is used as a spiritual healing forum, by posting some heart-war
 * Using `python manage.py runserver` to start the backend server of `Django`.
 
 
+### Start the frontend server of `Vue3`
+ * You should install the `node` first.
+ * go to the __Oasis__ folder.
+ * use `npm install` to install the dependencies.
+ * use `npm run dev` to start the frontend server of `Vue3`.
+ * Now you can click on its __url__ to enter our website.
 
 
 

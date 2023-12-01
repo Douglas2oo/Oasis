@@ -1,7 +1,9 @@
 <template>
   <div style=" margin-top: 10px;">
     <div class="articlebox" style="background-color: white;">
-      <h1 v-if="activeArticles.length == 0" style="margin-top: -10px;margin-bottom: 3px;">You haven't written an article yet.</h1><div class="flex-container ">
+      <h1 v-if="activeArticles.length == 0" style="margin-top: -10px;margin-bottom: 3px;">You haven't written an article
+        yet.</h1>
+      <div class="flex-container ">
         <el-collapse v-model="activeName" accordion style="width:100%; ">
           <el-collapse-item v-for="(articleItem, index) in activeArticles" class="comment" style="width:100%;margin-right:-10px; margin-bottom: 15px;position: relative; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
              min-height: 75px;" @click="GetComment((articleItem as any).author, (articleItem as any).id)">
@@ -32,7 +34,7 @@
     <!-- Set up navigation -->
     <!-- Pagination functionality -->
     <el-pagination layout="total, sizes, prev, pager, next, jumper" :current-page="currentPage4" :total="article.length"
-      @size-change="handleSizeChange" @current-change="handleCurrentChange" style="margin-bottom: 50px;"/>
+      @size-change="handleSizeChange" @current-change="handleCurrentChange" style="margin-bottom: 50px;" />
     <!-- Modal dialog -->
     <Ud />
   </div>

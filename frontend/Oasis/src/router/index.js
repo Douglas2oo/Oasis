@@ -14,7 +14,7 @@ const router = createRouter({
     {
       path: '/:catchAll(.*)',
       name: '404',
-      component: () => import('../views/404Page.vue') 
+      component: () => import('../views/404Page.vue')
     },
     {
       path: '/home',
@@ -25,7 +25,7 @@ const router = createRouter({
           path: '/home',
           name: 'YourHome',
           component: () => import('../views/YourHome.vue'),
- 
+
         },
         {
           path: '/ForumSquare',
