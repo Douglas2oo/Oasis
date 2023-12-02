@@ -8,7 +8,7 @@
       <div>
         <PersonalData style="margin-top: 50px;" />
       </div>
-      <h2>Your Articles</h2>
+      <h2>Your Posts</h2>
       <ArticleList />
       <!-- Fixed bar at the bottom -->
       <FixedBar />

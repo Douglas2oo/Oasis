@@ -23,7 +23,7 @@
             </template>
             <p class="content" v-if="Switch == (articleItem as any).id" v-for="(comment, index) in (Comments as any).data"
               :key="`${comment.id}-${index}`" style="min-width: 100%;margin-bottom: 20px;"> Comment {{ index + 1 }}:
-            <div style="font-weight: bold;;">
+            <div style="font-weight: bold;">
               {{ comment.comment }}
             </div>
             </p>
@@ -34,7 +34,7 @@
     <!-- Set up navigation -->
     <!-- Pagination functionality -->
     <el-pagination layout="total, sizes, prev, pager, next, jumper" :current-page="currentPage4" :total="article.length"
-      @size-change="handleSizeChange" @current-change="handleCurrentChange" style="margin-bottom: 50px;" />
+      @size-change="handleSizeChange" @current-change="handleCurrentChange" style="margin-bottom: 200px;"/>
     <!-- Modal dialog -->
     <Ud />
   </div>
